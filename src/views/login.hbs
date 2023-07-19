@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIGA</title>
+  <link rel="stylesheet" href="/css/login.css" />
+</head>
+
+<body id="body">
+  <div class="wrapper">
+    <div class="title">SIGA</div>
+    <form id="form" action="/login" method="POST">
+      <label style="color:Red">{{message}}</label>
+      <div class="field">
+        <input type="text" name="email" id="email" value="{{email}}" required>
+        <label>Email</label>
+      </div>
+      <div class="field">
+        <input type="password" name="senha" id="senha" required>
+        <label>Senha</label>
+      </div>
+      <div class="field">
+        <input type="submit" value="Login" id="login" />
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>
