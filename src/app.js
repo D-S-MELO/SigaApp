@@ -22,8 +22,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/', require('./routes/index'));
 
 //Variáveis do servidor
-const hostname = process.env.HOSTNAME;
-const port = process.env.PORT;
+const hostname = process.env.HOSTNAME || 'localhost';
+const port = process.env.PORT || '3000';
 
 //Configurações Servidor
 app.listen(port, hostname, () => {
