@@ -15,6 +15,15 @@ const client = new MongoClient(uri, {
   },
 });
 
+// Importando o Mongoose e conectando ao banco de dados usando a mesma URI do MongoDB
+const mongooseOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  bufferCommands: false, // Desativar o buffer para evitar o erro de tempo limite
+};
+
+mongoose.connect(uri, mongooseOptions);
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -27,4 +36,5 @@ async function run() {
     await client.close();
   }
 }
+
 run().catch(console.dir);

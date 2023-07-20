@@ -20,34 +20,32 @@
       </button>
     </div>
     {{/if}}
-    <form class="needs-validation " action="/usuario/cadastro" method="POST">
+    <form action="/usuario/editar/{{user.id}}?_method=PUT" method="POST">
       <div class="form-group">
         <h3>Dados Pessoais</h3>
         <div class="form-row">
           <div class="form-group col-sm-10">
             <label for="nome">Nome</label>
-            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="{{nome}}"
-              required />
+            <input type="text" class="form-control" id="nome" name="nome" value="{{user.nome}}" />
           </div>
           <div class="form-group col-sm-2">
             <label for="idade">Idade</label>
-            <input type="text" class="form-control" id="idade" name="idade" placeholder="Idade" value="{{idade}}"
-              required />
+            <input type="text" class="form-control" id="idade" name="idade" value="{{user.idade}}" />
           </div>
         </div>
-        <div class="form-row ">
+        <div class="form-row needs-validation">
           <div class="form-group col-md-4">
             <label for="cpf">CPF</label>
-            <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF" value="{{cpf}}" required />
+            <input type="text" class="form-control" id="cpf" name="cpf" value="{{user.cpf}}" />
           </div>
           <div class="form-group col-md-4">
             <label for="dtnascimento">Data de Nascimento</label>
             <input type="date" class="form-control" id="dtnascimento" name="dtnascimento"
-              placeholder="Data de Nascimento" value="{{dtnascimento}}" required />
+              value="{{dateFormat  user.dtnascimento 'YYYY-MM-DD'}}" />
           </div>
           <div class="form-group col-md-4">
             <label for="sexo">Sexo</label>
-            <select id="sexo" name="sexo" class="form-control" value="{{sexo}}" required>
+            <select id="sexo" name="sexo" class="form-control" value="{{user.sexo}}">
               <option>Masculino</option>
               <option>Feminino</option>
               <option>Outros</option>
@@ -57,18 +55,17 @@
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="fixo">Telefone Fixo</label>
-            <input type="text" class="form-control" id="fixo" name="fixo" placeholder="Telefone Fixo" value="{{fixo}}"
-              required />
+            <input type="text" class="form-control" id="fixo" name="fixo" value="{{user.fixo}}" />
           </div>
           <div class="form-group col-md-4">
             <label for="celular">Telefone Celular</label>
-            <input type="text" class="form-control" id="celular" name="celular" placeholder="Telefone Celular"
-              value="{{celular}}" required />
+            <input type="text" class="form-control" id="celular" name="celular" value="{{user.celular}}" />
           </div>
           <div class="form-group col-md-4">
             <label for="escolaridade">Escolaridade</label>
-            <select id="escolaridade" name="escolaridade" class="form-control" value="{{escolaridade}}" required>
-              <option selected>Analfabeto</option>
+            <select id="escolaridade" name="escolaridade" class="form-control" value="{{user.escolaridade}}">
+              <option></option>
+              <option>Analfabeto</option>
               <option>Fundamental Incompleto</option>
               <option>Fundamental Completo</option>
               <option>Médio Incompleto</option>
@@ -81,13 +78,13 @@
         <div class="form-row">
           <div class="form-group col-sm-6">
             <label for="email">E-mail</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" value="{{email}}"
-              required />
+            <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" value="{{user.email}}"
+              readonly />
           </div>
           <div class="form-group col-sm-6">
             <label for="senha">senha</label>
-            <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" value="{{senha}}"
-              required />
+            <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha"
+              value="{{user.senha}}" />
           </div>
         </div>
       </div>
@@ -95,9 +92,9 @@
       <div class="form-row">
         <div class="form-group col-md-2">
           <label for="cep">CEP</label>
-          <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP" value="{{cep}}" required />
+          <input type="text" class="form-control" id="cep" value="{{user.endereco.cep}}" />
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-2">
           <button type="button" id="buttonPesquisaCep" class="btn btn-secondary" style="margin-top: 32px"
             onclick="pesquisacep()">
             Buscar Endereço
@@ -107,34 +104,30 @@
       <div class="form-row">
         <div class="form-group col-md-10">
           <label for="logradouro">Endereço</label>
-          <input type="text" class="form-control" id="logradouro" name="logradouro" placeholder="Endereço"
-            value="{{logradouro}}" required />
+          <input type="text" class="form-control" id="logradouro" name="logradouro"
+            value="{{user.endereco.logradouro}}" />
         </div>
         <div class="form-group col-md-2">
           <label for="numero">Número</label>
-          <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" value="{{numero}}"
-            required />
+          <input type="text" class="form-control" id="numero" name="numero" value="{{user.endereco.numero}}" />
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="bairro">Bairro</label>
-          <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro" value="{{bairro}}"
-            required />
+          <input type="text" class="form-control" id="bairro" name="bairro" value="{{user.endereco.bairro}}" />
         </div>
         <div class="form-group col-md-4">
           <label for="cidade">Cidade</label>
-          <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" value="{{cidade}}"
-            required />
+          <input type="text" class="form-control" id="cidade" name="cidade" value="{{user.endereco.cidade}}" />
         </div>
         <div class="form-group col-md-4">
           <label for="estado">Estado</label>
-          <input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" value="{{estado}}"
-            required />
+          <input type="text" class="form-control" id="estado" name="estado" value="{{user.endereco.estado}}" />
         </div>
       </div>
       <button type="submit" class="btn btn-secondary" style="margin-top: 32px">
-        Cadastrar
+        Atualizar
       </button>
     </form>
   </div>

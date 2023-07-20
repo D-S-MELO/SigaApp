@@ -1,5 +1,6 @@
 const exphbs = require('express-handlebars');
 var Handlebars = require('handlebars');
+var moment = require('moment');
 const {
   allowInsecurePrototypeAccess,
 } = require('@handlebars/allow-prototype-access');
@@ -13,7 +14,14 @@ exports.init = function (app) {
       partialsDir: PARTIAL_DIR,
       layoutsDir: LAYOUT_DIR,
       handlebars: allowInsecurePrototypeAccess(Handlebars),
-      helpers: {},
+      helpers: {
+        dateFormat: function (date, format) {
+          return moment(date).format(format);
+        },
+        concat: function (prefix, id) {
+          return [...arguments].join(',');
+        },
+      },
     })
   );
 

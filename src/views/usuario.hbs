@@ -9,6 +9,8 @@
     <img hidden src="images/user.png" alt="" />
   </div>
   <div class="dash-content">
+    {{>mensagem}}
+    {{>error_msg}}
     <div class="overview">
       <div class="title">
         <span class="text">Usuários</span>
@@ -17,7 +19,7 @@
     <div class="form-group">
       <div class="row">
         <div class="col-md-8 col-lg-8">
-          <input type="search" class="form-control" id="buscauser" name="buscauser" placeholder="Procure pelo cpf">
+          <input type="search" class="form-control" id="buscauser" name="buscauser" placeholder="Busca....">
         </div>
         <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
           <form id="form-cadastrar" action="/usuario/cadastro?_method=GET" method="GET">
@@ -36,18 +38,23 @@
         </tr>
       </thead>
       <tbody>
-        {{#each usuarios}}
+        {{#each users}}
         <tr>
           <td>{{nome}}</td>
-          <td>{{email}}</td>
+          <td>{{cpf}}</td>
           <td>
-            <form id="form-editar-{{_id}}" action="/usuario/editar/{{_id}}?_method=GET" method="GET">
-              <button class="btn btn-link"><i class='bx bxs-edit' id='{{_id}}'></i></button>
-            </form>
-            <form id="form-excluir-{{_id}}" action="/usuario/deletar/{{_id}}?_method=DELETE" method="POST">
-              <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                  class="bx bxs-trash-alt"></i></button>
-            </form>
+            <div class="d-inline-block">
+              <form id="form-editar-{{_id}}" action="/usuario/editar/{{_id}}?_method=GET" method="GET">
+                <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
+                      class="uil uil-pen"></i></button>
+              </form>
+            </div>
+            <div class="d-inline-block">
+              <form id="form-excluir-{{_id}}" action="/usuario/deletar/{{_id}}?_method=DELETE" method="POST">
+                <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
+                    class="uil uil-trash"></i></button>
+              </form>
+            </div>
           </td>
         </tr>
         {{/each}}
