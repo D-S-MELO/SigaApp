@@ -371,19 +371,19 @@ nav.close ~ .layout .top {
   }
   nav ~ .layout {
     left: 73px;
-    width: calc (100% - 73px);
+    width: calc(100% - 73px);
   }
   nav.close ~ .layout {
     left: 250px;
-    width: calc (100% - 250px);
+    width: calc(100% - 250px);
   }
   nav ~ .layout .top {
     left: 73px;
-    width: calc (100% - 73px);
+    width: calc(100% - 73px);
   }
   nav.close ~ .layout .top {
     left: 250px;
-    width: calc (100% - 250px);
+    width: calc(100% - 250px);
   }
   .dash-content .activity-data {
     overflow: scroll;
@@ -391,7 +391,7 @@ nav.close ~ .layout .top {
 }
 @media (max-width: 780px) {
   .dash-content .boxes .box {
-    width: calca(100% / 2 - 15px);
+    width: calc(100% / 2 - 15px);
     margin-top: 15px;
   }
 }
@@ -422,19 +422,19 @@ nav.close ~ .layout .top {
   }
   nav ~ .layout {
     left: 73px;
-    width: calc (100% - 73px);
+    width: calc(100% - 73px);
   }
   nav.close ~ .layout {
     left: 73px;
-    width: calc (100% - 73px);
+    width: calc(100% - 73px);
   }
   nav ~ .layout .top {
     left: 73px;
-    width: calc (100% - 73px);
+    width: calc(100% - 73px);
   }
   nav.close ~ .layout .top {
     left: 73px;
-    width: calc (100% - 73px);
+    width: calc(100% - 73px);
   }
   .layout .top .sidebar-toggle {
     display: none;
@@ -443,5 +443,8 @@ nav.close ~ .layout .top {
 li.mode {
   visibility: hidden;
 }
-
-/* TEste */
+.container_error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

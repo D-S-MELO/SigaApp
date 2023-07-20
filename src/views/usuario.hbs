@@ -1,0 +1,57 @@
+{{>menu}}
+<section class="layout">
+  <div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <div hidden class="search-box">
+      <i class="uil uil-search"></i>
+      <input type="text" placeholder="Search Here..." />
+    </div>
+    <img hidden src="images/user.png" alt="" />
+  </div>
+  <div class="dash-content">
+    <div class="overview">
+      <div class="title">
+        <span class="text">Usuários</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-8 col-lg-8">
+          <input type="search" class="form-control" id="buscauser" name="buscauser" placeholder="Procure pelo cpf">
+        </div>
+        <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
+          <form id="form-cadastrar" action="/usuario/cadastro?_method=GET" method="GET">
+            <button type="submit" id="buttonAddUser" class="btn btn-secondary btn-block">Novo Usuário</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Açoes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each usuarios}}
+        <tr>
+          <td>{{nome}}</td>
+          <td>{{email}}</td>
+          <td>
+            <form id="form-editar-{{_id}}" action="/usuario/editar/{{_id}}?_method=GET" method="GET">
+              <button class="btn btn-link"><i class='bx bxs-edit' id='{{_id}}'></i></button>
+            </form>
+            <form id="form-excluir-{{_id}}" action="/usuario/deletar/{{_id}}?_method=DELETE" method="POST">
+              <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
+                  class="bx bxs-trash-alt"></i></button>
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>
