@@ -1,0 +1,128 @@
+{{>menu}}
+<section class="layout">
+  <div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <div hidden class="search-box">
+      <i class="uil uil-search"></i>
+      <input type="text" placeholder="Search Here..." />
+    </div>
+    <img hidden src="images/user.png" alt="" />
+  </div>
+  <div class="dash-content">
+    {{#if err}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{description}}
+      <hr>
+      <h5>Detalhe do Erro:</h5>
+      <p>{{err}}</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {{/if}}
+    <form class="needs-validation " action="/ativos/add" method="POST">
+      <div class="form-group">
+        <h5>Identificação do Equipamento</h5>
+        <div class="form-row">
+          <div class="form-group col-sm-4">
+            <label for="fabricante">Fabricante</label>
+            <input type="text" class="form-control" id="fabricante" name="fabricante" placeholder="Fabricante"
+              value="{{fabricante}}" required />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="local">Local de Instalação</label>
+            <select type="text" class="form-control local_instalacao" id="local_instalacao" name="local_instalacao"
+              placeholder="Local" value="{{local}}" required>
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="situacao"> Situação Equipamento</label>
+            <select id="situacao" name="situacao" class="form-control" value="{{situacao}}" required>
+              <option>Sim</option>
+              <option>Não</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="dataInstalacao">Data da Instalação</label>
+            <input type="date" class="form-control" id="dataInstalacao" name="dataInstalacao" value="{{dataInstalacao}}"
+              required />
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <h5>Hardware</h5>
+        <div class="form-row">
+          <div class="form-group col-sm-2">
+            <label for="so">Sistema Operacional</label>
+            <select type="text" class="form-control" id="so" name="so" value="{{so}}" required>
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="placa_mae">Placa Mãe</label>
+            <select type="text" class="form-control" id="placa_mae" name="placa_mae" value="{{placa_mae}}" required>
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="processador">Processador</label>
+            <select type="text" class="form-control" id="processador" name="processador" value="{{processador}}"
+              required>
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="memoria">Memória</label>
+            <select type="text" class="form-control" id="memoria" name="memoria" value="{{memoria}}" required>
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="armazenamento">Armazenamento</label>
+            <select type="text" class="form-control" id="armazenamento" name="armazenamento" value="{{armazenamento}}"
+              required>
+              <option></option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-row">
+          <div class="form-group col-sm-2">
+            <label for="fonte">Fonte</label>
+            <select type="text" class="form-control" id="fonte" name="fonte" value="{{fonte}}" required>
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="placa_video">Placa de Vídeo</label>
+            <select type="text" class="form-control" id="placa_video" name="placa_video" value="{{placa_video}}"
+              required>
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="gabinete">Gabinete</label>
+            <select type="text" class="form-control" id="gabinete" name="gabinete" value="{{gabinete}}" required>
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="monitor">Monitor</label>
+            <select type="text" class="form-control" id="monitor" name="monitor" value="{{monitor}}" required>
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="cooler">Cooler</label>
+            <select type="text" class="form-control" id="cooler" name="cooler" value="{{cooler}}" required>
+              <option></option>
+            </select>
+          </div>
+        </div>
+      </div>
+  </div>
+  </form>
+  </div>
+</section>

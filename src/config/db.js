@@ -19,7 +19,7 @@ const client = new MongoClient(uri, {
 const mongooseOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  bufferCommands: false, // Desativar o buffer para evitar o erro de tempo limite
+  bufferCommands: true, // Desativar o buffer para evitar o erro de tempo limite
 };
 
 mongoose.connect(uri, mongooseOptions);

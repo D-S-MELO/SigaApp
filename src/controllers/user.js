@@ -151,46 +151,50 @@ const show = async function (request, response, next) {
 };
 
 const update = async function (request, response, next) {
-  const {
-    nome,
-    idade,
-    cpf,
-    dtnascimento,
-    sexo,
-    fixo,
-    celular,
-    escolaridade,
-    email,
-    senha,
-    cep,
-    logradouro,
-    numero,
-    bairro,
-    cidade,
-    estado,
-  } = request.body;
-  await User.findByIdAndUpdate(request.params.id, {
-    nome,
-    idade,
-    cpf,
-    dtnascimento,
-    sexo,
-    fixo,
-    celular,
-    escolaridade,
-    email,
-    senha,
-    endereco: {
+  try {
+    const {
+      nome,
+      idade,
+      cpf,
+      dtnascimento,
+      sexo,
+      fixo,
+      celular,
+      escolaridade,
+      email,
+      senha,
       cep,
       logradouro,
       numero,
       bairro,
       cidade,
       estado,
-    },
-  });
-  request.flash('success_mgs', 'Usuário Editado com Sucesso!');
-  response.redirect('/usuario');
+    } = request.body;
+    await User.findByIdAndUpdate(request.params.id, {
+      nome,
+      idade,
+      cpf,
+      dtnascimento,
+      sexo,
+      fixo,
+      celular,
+      escolaridade,
+      email,
+      senha,
+      endereco: {
+        cep,
+        logradouro,
+        numero,
+        bairro,
+        cidade,
+        estado,
+      },
+    });
+    request.flash('success_mgs', 'Usuário Editado com Sucesso!');
+    response.redirect('/usuario');
+  } catch (err) {
+    request.flash('erro_mgs', 'Ocorreu um erro ao excluir o usuário!');
+  }
 };
 
 const deletar = async function (request, response, next) {
@@ -203,4 +207,12 @@ const deletar = async function (request, response, next) {
   }
 };
 
-module.exports = { indexCardUser, indexUser, add, dataUser, show, deletar };
+module.exports = {
+  indexCardUser,
+  indexUser,
+  add,
+  dataUser,
+  show,
+  deletar,
+  update,
+};
