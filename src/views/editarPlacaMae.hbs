@@ -1,0 +1,83 @@
+{{>menu}}
+<section class="layout">
+  <div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <div hidden class="search-box">
+      <i class="uil uil-search"></i>
+      <input type="text" placeholder="Search Here..." />
+    </div>
+    <img hidden src="images/user.png" alt="" />
+  </div>
+  <div class="dash-content">
+    {{#if err}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{description}}
+      <hr>
+      <h5>Detalhe do Erro:</h5>
+      <p>{{err}}</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {{/if}}
+    <form class="needs-validation " action="/placaMae/editar/{{placaMae.id}}?_method=PUT" method="POST">
+      <div class="form-group">
+        <h5>Identificação</h5>
+        <div class="form-row">
+          <div class="form-group col-sm-4">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="{{placaMae.nome}}"
+              readonly required />
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="fabricante">Fabricante</label>
+            <input type="text" class="form-control" id="fabricante" name="fabricante" placeholder="Fabricante"
+              value="{{placaMae.fabricante}}" required />
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="modelo">Modelo</label>
+            <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Modelo"
+              value="{{placaMae.modelo}}" required />
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="tipo">Tipo</label>
+            <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Tipo" value="{{placaMae.tipo}}"
+              required />
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="chipset">Chipset</label>
+            <input type="text" class="form-control" id="chipset" name="chipset" placeholder="Chipset"
+              value="{{placaMae.chipset}}" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-sm-6">
+            <label for="memoria">Memória</label>
+            <textarea class="form-control col-sm-12" id="memoria" name="memoria" rows="10"
+              required>{{placaMae.memoria}}</textarea>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="slots">Slots</label>
+            <textarea class="form-control col-sm-12" id="slots" name="slots" rows="10"
+              required>{{placaMae.slots}}</textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-sm-6">
+            <label for="graficos">Gráficos</label>
+            <textarea class="form-control col-sm-12" id="graficos" name="graficos" rows="10"
+              required>{{placaMae.graficos}}</textarea>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="conectores">Conectores</label>
+            <textarea class="form-control col-sm-12" id="conectores" name="conectores" rows="10"
+              required>{{placaMae.conectores}}</textarea>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-secondary" style="margin-top: 32px">
+        Atualizar
+      </button>
+    </form>
+  </div>
+</section>

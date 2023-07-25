@@ -20,18 +20,18 @@
       </button>
     </div>
     {{/if}}
-    <form class="needs-validation " action="/local/editar/{{local.id}}?_method=PUT" method="POST">
+    <form class="needs-validation " action="/so/cadastro" method="POST">
       <div class="form-group">
-        <h3>Novo Local de Atendimento</h3>
+        <h3>Novo Sistema Operacional</h3>
         <div class="form-row">
           <div class="form-group col-sm-10">
-            <label for="nome">Local</label>
-            <input type="text" class="form-control" id="nome" disabled name="nome" placeholder="Nome"
-              value="{{local.nome}}" required />
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="{{nome}}"
+              required />
           </div>
         </div>
         <button type="submit" class="btn btn-secondary" style="margin-top: 32px">
-          Atualizar
+          Cadastrar
         </button>
     </form>
   </div>

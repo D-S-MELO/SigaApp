@@ -2,7 +2,10 @@ $(document).ready(function () {
   getDadosCampoLocal();
   buscaUsuarioTabela();
   editaExcluiUsuarios();
+  getDadosCampoSo();
+  getDadosCampoPlacaMae();
 });
+
 function getDadosCampoLocal() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -14,7 +17,6 @@ function getDadosCampoLocal() {
         while (selectElement.firstChild) {
           selectElement.removeChild(selectElement.lastChild);
         }
-        // console.log(data);
         if (Object.keys(data).length !== 0) {
           data.locais.forEach((local) => {
             const nome = local.nome;
@@ -31,6 +33,68 @@ function getDadosCampoLocal() {
     },
     error: function (xhr, status, error) {
       console.error('Erro ao buscar os local: ' + error);
+    },
+  });
+}
+
+function getDadosCampoSo() {
+  // Realiza uma requisição Ajax para buscar os dados do servidor
+  $.ajax({
+    url: '/ativos/so',
+    dataType: 'json',
+    success: function (data) {
+      const selectElement = document.getElementById('so');
+      if (selectElement !== null) {
+        while (selectElement.firstChild) {
+          selectElement.removeChild(selectElement.lastChild);
+        }
+        if (Object.keys(data).length !== 0) {
+          data.so.forEach((so) => {
+            const nome = so.nome;
+            const optionElement = document.createElement('option');
+            optionElement.textContent = nome;
+            selectElement.appendChild(optionElement);
+          });
+        } else {
+          const optionElement = document.createElement('option');
+          optionElement.textContent = 'Não Há Dados ';
+          selectElement.appendChild(optionElement);
+        }
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error('Erro ao buscar os Sistema Operacional: ' + error);
+    },
+  });
+}
+
+function getDadosCampoPlacaMae() {
+  // Realiza uma requisição Ajax para buscar os dados do servidor
+  $.ajax({
+    url: '/ativos/placaMae',
+    dataType: 'json',
+    success: function (data) {
+      const selectElement = document.getElementById('placa_mae');
+      if (selectElement !== null) {
+        while (selectElement.firstChild) {
+          selectElement.removeChild(selectElement.lastChild);
+        }
+        if (Object.keys(data).length !== 0) {
+          data.placaMae.forEach((placa) => {
+            const nome = placa.nome;
+            const optionElement = document.createElement('option');
+            optionElement.textContent = nome;
+            selectElement.appendChild(optionElement);
+          });
+        } else {
+          const optionElement = document.createElement('option');
+          optionElement.textContent = 'Não Há Dados ';
+          selectElement.appendChild(optionElement);
+        }
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error('Erro ao buscar Placa Mãe: ' + error);
     },
   });
 }
