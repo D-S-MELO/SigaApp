@@ -1,0 +1,61 @@
+{{>menu}}
+<section class="layout">
+  <div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <div hidden class="search-box">
+      <i class="uil uil-search"></i>
+      <input type="text" placeholder="Search Here..." />
+    </div>
+    <img hidden src="images/user.png" alt="" />
+  </div>
+  <div class="dash-content">
+    {{#if err}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{description}}
+      <hr>
+      <h5>Detalhe do Erro:</h5>
+      <p>{{err}}</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {{/if}}
+    <form class="needs-validation " action="/armazenamento/editar/{{armazenamentos.id}}?_method=PUT" method="POST">
+      <div class="form-group">
+        <h5>Armazenamento</h5>
+        <div class="form-row">
+          <div class="form-group col-sm-4">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome"
+              value="{{armazenamentos.nome}}" required />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="fabricante">Fabricante</label>
+            <input type="text" class="form-control" id="fabricante" name="fabricante" placeholder="Fabricante"
+              value="{{armazenamentos.fabricante}}" required />
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="modelo">Modelo</label>
+            <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Modelo"
+              value="{{armazenamentos.modelo}}" required />
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="capacidade">Modelo</label>
+            <input type="text" class="form-control" id="capacidade" name="capacidade" placeholder="Capacidade"
+              value="{{armazenamentos.capacidade}}" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-sm-12">
+            <label for="especificacoes">Especificações</label>
+            <textarea class="form-control col-sm-12" id="especificacao" name="especificacao" rows="10"
+              required>{{armazenamentos.especificacao}}</textarea>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-secondary" style="margin-top: 32px">
+        Atualizar
+      </button>
+    </form>
+  </div>
+</section>
