@@ -11,13 +11,37 @@ const placaVideos = require('../model/PlacaVideo');
 const monitor = require('../model/Monitor');
 const gabinete = require('../model/Gabinete');
 const cooler = require('../model/Cooler');
+const Ativos = require('../model/Ativos');
 
 const indexAtivos = function (request, response, next) {
   const jsFiles = ['layout.js', 'controllerAtivos.js'];
-  return response.render('ativos', {
+  return response.render('cadastroAtivos', {
     layout: MASTER_DIR,
     jsFiles: { files: jsFiles },
   });
+};
+const show = async function (request, response, next) {
+  const jsFiles = ['layout.js', 'controllerAtivos.js'];
+  try {
+    const ativos = await Ativo.find({});
+    return response.render('ativos', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+      ativos,
+    });
+  } catch (err) {
+    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar os Equipamentos');
+  }
+};
+const getDadosAtivos = async function (request, response, next) {
+  try {
+    const ativos = await Ativo.find();
+    const responseData = { ativos };
+    const jsonContent = JSON.stringify(responseData);
+    return response.end(jsonContent);
+  } catch (err) {
+    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar os Equipamentos');
+  }
 };
 
 const local = async function (request, response, next) {
@@ -140,7 +164,85 @@ const gabinetes = async function (request, response, next) {
     request.flash('erro_mgs', 'Ocorreu um erro ao requisitar os monitores');
   }
 };
+const add = async function (request, response, next) {
+  const dados = request.body;
+  const fabricante = dados[0];
+  const local = dados[1];
+  const situacao = dados[2];
+  const dataInstalacao = dados[3];
+  const componentes = dados[4];
+  try {
+    const novoAtivo = new Ativo({
+      fabricante,
+      local,
+      situacao,
+      dataInstalacao,
+      hardware: [
+        {
+          componentes,
+        },
+      ],
+    });
+    await novoAtivo.save();
+    request.flash('success_mgs', 'Ativo Cadastrado com Sucesso!');
+    response.redirect('/ativos');
+  } catch (error) {
+    console.log(error);
+    response.json({ error: false, error });
+  }
+};
+
+const deletar = async function (request, response, next) {
+  try {
+    await Ativo.findByIdAndDelete(request.params.id);
+    request.flash('success_mgs', 'Equipamento Excluído com Sucesso!');
+    response.redirect('/ativos');
+  } catch (err) {
+    request.flash('erro_mgs', 'Ocorreu um erro ao excluir o equipamento!');
+  }
+};
+const update = async function (request, response, next) {
+  const dados = request.body;
+  const fabricante = dados[0];
+  const local = dados[1];
+  const situacao = dados[2];
+  const dataInstalacao = dados[3];
+  const componentes = dados[4];
+  try {
+    const ativo = {
+      fabricante,
+      local,
+      situacao,
+      dataInstalacao,
+      hardware: [
+        {
+          componentes,
+        },
+      ],
+    };
+    await Ativo.findByIdAndUpdate(request.params.id, ativo);
+    request.flash('success_mgs', 'Ativo Atualizado com Sucesso!');
+    response.json({});
+  } catch (error) {
+    console.log(error);
+    response.json({ error: false, error });
+  }
+};
+const showEquipamento = async function (request, response, next) {
+  const jsFiles = ['layout.js', 'controllerAtivos.js'];
+  try {
+    const ativo = await Ativo.findById(request.params.id);
+    return response.render('editarAtivos', {
+      layout: MASTER_DIR,
+      ativo,
+      jsFiles: { files: jsFiles },
+    });
+  } catch (err) {
+    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar o usuário');
+  }
+};
 module.exports = {
+  add,
   indexAtivos,
   local,
   so,
@@ -153,4 +255,9 @@ module.exports = {
   monitors,
   gabinetes,
   coolers,
+  show,
+  deletar,
+  showEquipamento,
+  update,
+  getDadosAtivos,
 };

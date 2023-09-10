@@ -1,0 +1,162 @@
+{{>menu}}
+<section class="layout">
+  <div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <div hidden class="search-box">
+      <i class="uil uil-search"></i>
+      <input type="text" placeholder="Search Here..." />
+    </div>
+    <img hidden src="images/user.png" alt="" />
+  </div>
+  <div class="dash-content">
+    {{#if err}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{description}}
+      <hr>
+      <h5>Detalhe do Erro:</h5>
+      <p>{{err}}</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {{/if}}
+    <form class="needs-validation " action="/ativos/cadastro" method="POST">
+      <div class="form-group">
+        <h5>Identificação do Equipamento</h5>
+        <div class="form-row">
+          <div class="form-group col-sm-4">
+            <label for="fabricante">Fabricante</label>
+            <input type="text" class="form-control" id="fabricante" name="fabricante" placeholder="Fabricante"
+              value="{{ativo.fabricante}}" required />
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="local">Local de Instalação</label>
+            <select type="text" class="form-control local_instalacao" id="local_instalacao" name="local_instalacao"
+              placeholder="Local" data-id="{{ativo.local}}" required>
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="situacao"> Situação Equipamento</label>
+            <select id="situacao" name="situacao" class="form-control" data-id="{{ativo.situacao}}" required>
+              <option value=""></option>
+              <option>Ativo</option>
+              <option>Inativo</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="dataInstalacao">Data da Instalação</label>
+            <input type="date" class="form-control" id="dataInstalacao" name="dataInstalacao"
+              value="{{dateFormat  ativo.dataInstalacao 'YYYY-MM-DD'}}" required />
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <h5>Hardware</h5>
+        <div class="form-row">
+          <div class="form-group col-sm-12">
+            <select id="hardware" name="hardware" class="form-control hardware">
+              <option value=""></option>
+              <option value="armazenamento">Armazenamento</option>
+              <option value="cooler">Cooler</option>
+              <option value="fonte">Fonte</option>
+              <option value="memoria">Memória</option>
+              <option value="monitor">Monitor</option>
+              <option value="placaVideo">Placa de Vídeo</option>
+              <option value="placa_mae">Placa Mãe</option>
+              <option value="processador">Processador</option>
+              <option value="so">Sistema Operacional</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-row itemHardware">
+          <div class="form-group col-sm-8 so" hidden>
+            <label for="so">Sistema Operacional</label>
+            <select type="text" class="form-control so" id="so" name="so">
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-8 placa_mae" hidden>
+            <label for="placa_mae">Placa Mãe</label>
+            <select type="text" class="form-control" id="placa_mae" name="placa_mae">
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-8 processador" hidden>
+            <label for="processador">Processador</label>
+            <select type="text" class="form-control" id="processador" name="processador">
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-8 memoria" hidden>
+            <label for="memoria">Memória</label>
+            <select type="text" class="form-control" id="memoria" name="memoria">
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-8 armazenamento" hidden>
+            <label for="armazenamento">Armazenamento</label>
+            <select type="text" class="form-control" id="armazenamento" name="armazenamento">
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-8 fonte" hidden>
+            <label for="fonte">Fonte</label>
+            <select type="text" class="form-control" id="fonte" name="fonte">
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-8 placaVideo" hidden>
+            <label for="placaVideo">Placa de Vídeo</label>
+            <select type="text" class="form-control" id="placaVideo" name="placaVideo">
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-8 gabinete" hidden>
+            <label for="gabinete">Gabinete</label>
+            <select type="text" class="form-control" id="gabinete" name="gabinete">
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-8 monitor" hidden>
+            <label for="monitor">Monitor</label>
+            <select type="text" class="form-control" id="monitor" name="monitor">
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-10 cooler" hidden>
+            <label for="cooler">Cooler</label>
+            <select type="text" class="form-control" id="cooler" name="cooler">
+              <option></option>
+            </select>
+          </div>
+          <div class="form-group col-sm-2 buttonAdd" hidden>
+            <button type="button" class="btn btn-secondary btn-sm-2">
+              <span class="btn-label">Adicionar</span></button>
+          </div>
+        </div>
+        <div class="form-group ">
+          <div class="form-row tabela">
+            <div class="form-group col-sm-12 ">
+              <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0"
+                width="100%" required>
+                <thead>
+                  <tr>
+                    <th>Componentes</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary edit" style="margin-top: 32px">
+          Atualizar
+        </button>
+    </form>
+  </div>
+</section>
