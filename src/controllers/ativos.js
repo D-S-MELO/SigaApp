@@ -44,6 +44,24 @@ const getDadosAtivos = async function (request, response, next) {
   }
 };
 
+const getDadosGraficos = async function (request, response, next) {
+  try {
+    const ativos = await Ativo.aggregate([
+      {
+        $group: {
+          _id: '$local', // Agrupa por local
+          count: { $sum: 1 }, // Conta a quantidade de documentos em cada grupo
+        },
+      },
+    ]);
+    const responseData = { ativos };
+    const jsonContent = JSON.stringify(responseData);
+    return response.end(jsonContent);
+  } catch (err) {
+    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar os Equipamentos');
+  }
+};
+
 const local = async function (request, response, next) {
   try {
     const locais = await Local.find({});
@@ -260,4 +278,5 @@ module.exports = {
   showEquipamento,
   update,
   getDadosAtivos,
+  getDadosGraficos,
 };

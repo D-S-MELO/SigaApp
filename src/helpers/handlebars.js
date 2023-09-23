@@ -18,6 +18,14 @@ exports.init = function (app) {
         dateFormat: function (date, format) {
           return moment(date).format(format);
         },
+        dateMongoFormat: function (date) {
+          const opcoes = {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          };
+          return date.toLocaleDateString('pt-BR', opcoes);
+        },
         concat: function (prefix, id) {
           return [...arguments].join(',');
         },

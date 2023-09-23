@@ -49,7 +49,7 @@ const add = async function (request, response, next) {
       // Salvando o usuário no MongoDB usando o Mongoose
       await novoArmazenamento.save();
       request.flash('success_mgs', 'Armazenemto Cadastrada com Sucesso!');
-      response.redirect('/armazenamento');
+      response.redirect('/hardware');
     }
   } catch (err) {
     const description =
@@ -98,7 +98,7 @@ const update = async function (request, response, next) {
       especificacao,
     });
     request.flash('success_mgs', 'Armazenamento Editado com Sucesso!');
-    response.redirect('/armazenamento');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash(
       'erro_mgs',
@@ -111,7 +111,7 @@ const deletar = async function (request, response, next) {
   try {
     await armazenamento.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Armazenamento Excluído com Sucesso!');
-    response.redirect('/armazenamento');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir esse armazenamento!');
   }

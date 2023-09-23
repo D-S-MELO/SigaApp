@@ -16,60 +16,27 @@
       <div class="boxes">
         <div class="box box1">
           <i class="uil uil-heart-break"></i>
-          {{!-- <span class="text">Descartes</span>
-          <span class="number">50</span> --}}
+          <span class="text">Equipamentos Desativados</span>
+          <span class="number">{{ totEquipamentosInativos}}</span>
         </div>
         <div class="box box2">
           <i class="uil uil-desktop"></i>
-          {{!-- <span class="text">Manuteções</span>
-          <span class="number">1</span> --}}
+          <span class="text">Ativos</span>
+          <span class="number">{{ totEquipamentos}}</span>
         </div>
         <div class="box box3">
           <i class="uil uil-clipboard-notes"></i>
-          {{!-- <span class="text">Chamados</span>
-          <span class="number">20</span> --}}
+          <span class="text">Chamados</span>
+          <span class="number">{{ totChamados}}</span>
         </div>
       </div>
       <div class="activity">
         <div class="title">
-          <i class="uil uil-clipboard-notes"></i>
-          <span class="text">Chamados</span>
+          <i class="uil uil-chart-pie"></i>
+          <span class="text">Equipamentos X Local</span>
         </div>
-        <div class="activity-data">
-          {{!-- <div class="data names">
-            <span class="data-title">Codigo</span>
-            <span class="data-list">12522</span>
-            <span class="data-list">12522</span>
-            <span class="data-list">12522</span>
-            <span class="data-list">12522</span>
-            <span class="data-list">12522</span>
-            <span class="data-list">12522</span>
-            <span class="data-list">12522</span>
-            <span class="data-list">12522</span>
-          </div>
-          <div class="data names">
-            <span class="data-title">Local</span>
-            <span class="data-list">Hemodiálise</span>
-            <span class="data-list">Hemodiálise</span>
-            <span class="data-list">Hemodiálise</span>
-            <span class="data-list">Hemodiálise</span>
-            <span class="data-list">Hemodiálise</span>
-            <span class="data-list">Hemodiálise</span>
-            <span class="data-list">Hemodiálise</span>
-            <span class="data-list">Hemodiálise</span>
-          </div>
-          <div class="data names">
-            <span class="data-title">Equipamento</span>
-            <span class="data-list">Chromebook</span>
-            <span class="data-list">Chromebook</span>
-            <span class="data-list">Chromebook</span>
-            <span class="data-list">Chromebook</span>
-            <span class="data-list">Chromebook</span>
-            <span class="data-list">Chromebook</span>
-            <span class="data-list">Chromebook</span>
-            <span class="data-list">Chromebook</span>
-          </div>
-        </div> --}}
+        <div class="canva">
+          <canvas id="myChart"></canvas>
         </div>
       </div>
 </section>

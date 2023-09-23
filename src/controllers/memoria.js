@@ -98,7 +98,7 @@ const update = async function (request, response, next) {
       especificacao,
     });
     request.flash('success_mgs', 'Memória Editada com Sucesso!');
-    response.redirect('/memoriaRam');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao atualizar a memória!');
   }
@@ -108,7 +108,7 @@ const deletar = async function (request, response, next) {
   try {
     await memoria.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Memória Excluído com Sucesso!');
-    response.redirect('/memoriaRam');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir a memória!');
   }

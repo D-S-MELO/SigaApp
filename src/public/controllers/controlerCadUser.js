@@ -1,3 +1,11 @@
+$(document).ready(function () {
+  setaDadosEdit();
+  $('#cep').mask('00000-000');
+  $('#cpf').mask('000.000.000-00');
+  $('#celular').mask('(00) 00000-0000');
+  $('#fixo').mask('(00) 0000-0000');
+});
+
 function limpa_formulario_cep() {
   //Limpa valores do formulário de cep.
   document.getElementById('logradouro').value = '';
@@ -58,10 +66,10 @@ function pesquisacep() {
     limpa_formulario_cep();
   }
 }
-
-$(document).ready(function () {
-  $('#cep').mask('00000-000');
-  $('#cpf').mask('000.000.000-00');
-  $('#celular').mask('(00) 00000-0000');
-  $('#fixo').mask('(00) 0000-0000');
-});
+function setaDadosEdit() {
+  // Define o valor selecionado no select usando jQuery
+  var dataIdValueEscolaridade = $("label[for='escolaridade']").data('id');
+  var dataIdValueSexo = $("label[for='sexo']").data('id');
+  $('#escolaridade').val(dataIdValueEscolaridade);
+  $('#sexo').val(dataIdValueSexo);
+}

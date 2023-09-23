@@ -13,37 +13,44 @@
     {{>error_msg}}
     <div class="overview">
       <div class="title">
-        <span class="text">Usuários</span>
+        <span class="text">Chamados</span>
       </div>
     </div>
     <div class="form-group">
       <div class="row">
         <div class="col-md-8 col-lg-8">
-          <input type="search" class="form-control" id="buscauser" name="buscauser" placeholder="Busque pelo Nome...">
+          <input type="search" class="form-control " id="buscaChamado" name="buscaChamado" placeholder="Busca....">
         </div>
         <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
-          <form id="form-cadastrar" action="/usuario/cadastro?_method=GET" method="GET">
-            <button type="submit" id="buttonAddUser" class="btn btn-secondary btn-block">Novo Usuário</button>
+          <form id="form-cadastrar" action="/chamados/cadastro?_method=GET" method="GET">
+            <button type="submit" id="buttonAddUser" class="btn btn-secondary btn-block">Novo Chamado</button>
           </form>
         </div>
       </div>
     </div>
-
     <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
       <thead>
         <tr>
-          <th>Nome</th>
-          <th>CPF</th>
-          <th>Editar</th>
-          <th>Excluir</th>
+          <th>Data de Abertura</th>
+          <th>Código</th>
+          <th>Descrição</th>
+          <th>Local</th>
         </tr>
       </thead>
       <tbody>
+        {{#each chamados}}
+        <tr>
+          <td>{{dateMongoFormat  createdAt 'YYYY-MM-DD'}}</td>
+          <td>{{id}}</td>
+          <td>{{descricao}}</td>
+          <td>{{#each local}}
+            {{nome}}
+            {{/each}}
+          </td>
+        </tr>
+        {{/each}}
       </tbody>
     </table>
-    <div id="paginacao">
-      <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
-      <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
-    </div>
+    <div id="pagination"></div>
   </div>
 </section>

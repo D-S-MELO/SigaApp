@@ -9,6 +9,15 @@ const indexCardUser = function (request, response, next) {
   });
 };
 
+const getDadosUser = async function (request, response, next) {
+  try {
+    const usuarios = await User.find({});
+    response.json(usuarios);
+  } catch (err) {
+    response.status(500).send(err);
+  }
+};
+
 const indexUser = async function (request, response, next) {
   const jsFiles = ['layout.js', 'controlerUser.js'];
   try {
@@ -151,25 +160,25 @@ const show = async function (request, response, next) {
 };
 
 const update = async function (request, response, next) {
+  const {
+    nome,
+    idade,
+    cpf,
+    dtnascimento,
+    sexo,
+    fixo,
+    celular,
+    escolaridade,
+    email,
+    senha,
+    cep,
+    logradouro,
+    numero,
+    bairro,
+    cidade,
+    estado,
+  } = request.body;
   try {
-    const {
-      nome,
-      idade,
-      cpf,
-      dtnascimento,
-      sexo,
-      fixo,
-      celular,
-      escolaridade,
-      email,
-      senha,
-      cep,
-      logradouro,
-      numero,
-      bairro,
-      cidade,
-      estado,
-    } = request.body;
     await User.findByIdAndUpdate(request.params.id, {
       nome,
       idade,
@@ -193,7 +202,34 @@ const update = async function (request, response, next) {
     request.flash('success_mgs', 'Usuário Editado com Sucesso!');
     response.redirect('/usuario');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao excluir o usuário!');
+    request.flash('erro_mgs', 'Ocorreu um erro editar o usuário!');
+    const description =
+      'Operação Bloqueada! Ocorreu um Erro ao executar a operação';
+    return response.render('editarUsuario', {
+      layout: MASTER_DIR,
+      err,
+      description,
+      user: {
+        nome: nome,
+        idade: idade,
+        cpf: cpf,
+        dtnascimento: dtnascimento,
+        sexo: sexo,
+        fixo: fixo,
+        celular: celular,
+        escolaridade: escolaridade,
+        email: email,
+        senha: senha,
+        endereco: {
+          cep: cep,
+          logradouro: logradouro,
+          numero: numero,
+          bairro: bairro,
+          cidade: cidade,
+          estado: estado,
+        },
+      },
+    });
   }
 };
 
@@ -207,6 +243,17 @@ const deletar = async function (request, response, next) {
   }
 };
 
+const findUser = async function (request, response, next) {
+  try {
+    const usuarios = await User.find({
+      $or: [{ nome: new RegExp(request.query.nome, 'i') }],
+    });
+    response.json(usuarios);
+  } catch (err) {
+    response.status(500).send(err);
+  }
+};
+
 module.exports = {
   indexCardUser,
   indexUser,
@@ -215,4 +262,6 @@ module.exports = {
   show,
   deletar,
   update,
+  getDadosUser,
+  findUser,
 };

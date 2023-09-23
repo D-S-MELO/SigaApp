@@ -43,7 +43,7 @@ const add = async function (request, response, next) {
         'success_mgs',
         'Sistema Operacional Cadastrado com Sucesso!'
       );
-      response.redirect('/so');
+      response.redirect('/hardware');
     }
   } catch (err) {
     const description =
@@ -78,7 +78,7 @@ const update = async function (request, response, next) {
       nome,
     });
     request.flash('success_mgs', 'Sistema Operacional Editado com Sucesso!');
-    response.redirect('/so');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash(
       'erro_mgs',
@@ -91,7 +91,7 @@ const deletar = async function (request, response, next) {
   try {
     await So.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Sistema Operacional Excluído com Sucesso!');
-    response.redirect('/so');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash(
       'erro_mgs',

@@ -31,7 +31,7 @@
           </div>
           <div class="form-group col-sm-2">
             <label for="idade">Idade</label>
-            <input type="text" class="form-control" id="idade" name="idade" placeholder="Idade" value="{{idade}}"
+            <input type="number" class="form-control" id="idade" name="idade" placeholder="Idade" value="{{idade}}"
               required />
           </div>
         </div>
@@ -48,6 +48,7 @@
           <div class="form-group col-md-4">
             <label for="sexo">Sexo</label>
             <select id="sexo" name="sexo" class="form-control" value="{{sexo}}" required>
+              <option></option>
               <option>Masculino</option>
               <option>Feminino</option>
               <option>Outros</option>
@@ -68,7 +69,8 @@
           <div class="form-group col-md-4">
             <label for="escolaridade">Escolaridade</label>
             <select id="escolaridade" name="escolaridade" class="form-control" value="{{escolaridade}}" required>
-              <option selected>Analfabeto</option>
+              <option></option>
+              <option>Analfabeto</option>
               <option>Fundamental Incompleto</option>
               <option>Fundamental Completo</option>
               <option>Médio Incompleto</option>
@@ -112,7 +114,7 @@
         </div>
         <div class="form-group col-md-2">
           <label for="numero">Número</label>
-          <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" value="{{numero}}"
+          <input type="number" class="form-control" id="numero" name="numero" placeholder="Número" value="{{numero}}"
             required />
         </div>
       </div>

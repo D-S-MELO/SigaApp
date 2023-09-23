@@ -451,3 +451,56 @@ li.mode {
 .buttonAdd {
   margin-top: 31px;
 }
+.subMenu {
+  margin-left: 10px;
+}
+
+.tab-list {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  margin: 2px;
+}
+
+.tab-item:hover {
+  background-color: #ddd;
+}
+
+/* Estilos para o conteúdo das abas */
+.tab-content {
+  display: none;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+h6 {
+  font-style: italic;
+}
+.canva {
+  max-width: 50%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+/* Alinha a div à direita da tabela */
+#paginacao {
+  text-align: right;
+  margin-top: 10px; /* Espaço superior para separar da tabela */
+}
+
+/* Remove a borda dos botões */
+#pagina-anterior,
+#pagina-proxima {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 20px;
+}

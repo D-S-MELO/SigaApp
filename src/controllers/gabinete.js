@@ -47,7 +47,7 @@ const add = async function (request, response, next) {
       // Salvando o usuário no MongoDB usando o Mongoose
       await novoGabiente.save();
       request.flash('success_mgs', 'Gabinete Cadastrado com Sucesso!');
-      response.redirect('/gabinete');
+      response.redirect('/hardware');
     }
   } catch (err) {
     const description =
@@ -88,7 +88,7 @@ const update = async function (request, response, next) {
       especificacao,
     });
     request.flash('success_mgs', 'Gabiente Editado com Sucesso!');
-    response.redirect('/gabinete');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao atualizar esse gabinete!');
   }
@@ -98,7 +98,7 @@ const deletar = async function (request, response, next) {
   try {
     await gabinete.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Gabinete Excluído com Sucesso!');
-    response.redirect('/gabinete');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir esse gabinete!');
   }

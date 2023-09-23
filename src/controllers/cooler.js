@@ -47,7 +47,7 @@ const add = async function (request, response, next) {
       // Salvando o usuário no MongoDB usando o Mongoose
       await novoCooler.save();
       request.flash('success_mgs', 'Cooler Cadastrado com Sucesso!');
-      response.redirect('/cooler');
+      response.redirect('/hardware');
     }
   } catch (err) {
     const description =
@@ -88,7 +88,7 @@ const update = async function (request, response, next) {
       especificacao,
     });
     request.flash('success_mgs', 'Cooler Editado com Sucesso!');
-    response.redirect('/cooler');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao atualizar esse cooler!');
   }
@@ -98,7 +98,7 @@ const deletar = async function (request, response, next) {
   try {
     await cooler.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Cooler Excluído com Sucesso!');
-    response.redirect('/cooler');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir esse cooler!');
   }

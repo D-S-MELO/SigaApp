@@ -36,7 +36,7 @@
         <div class="form-row needs-validation">
           <div class="form-group col-md-4">
             <label for="cpf">CPF</label>
-            <input type="text" class="form-control" id="cpf" disabled name="cpf" value="{{user.cpf}}" />
+            <input type="text" class="form-control" id="cpf" name="cpf" value="{{user.cpf}}" readonly />
           </div>
           <div class="form-group col-md-4">
             <label for="dtnascimento">Data de Nascimento</label>
@@ -44,8 +44,8 @@
               value="{{dateFormat  user.dtnascimento 'YYYY-MM-DD'}}" />
           </div>
           <div class="form-group col-md-4">
-            <label for="sexo">Sexo</label>
-            <select id="sexo" name="sexo" class="form-control" value="{{user.sexo}}">
+            <label for="sexo" data-id="{{user.sexo}}">Sexo</label>
+            <select id="sexo" name="sexo" class="form-control">
               <option>Masculino</option>
               <option>Feminino</option>
               <option>Outros</option>
@@ -62,16 +62,16 @@
             <input type="text" class="form-control" id="celular" name="celular" value="{{user.celular}}" />
           </div>
           <div class="form-group col-md-4">
-            <label for="escolaridade">Escolaridade</label>
-            <select id="escolaridade" name="escolaridade" class="form-control" value="{{user.escolaridade}}">
-              <option></option>
-              <option>Analfabeto</option>
-              <option>Fundamental Incompleto</option>
-              <option>Fundamental Completo</option>
-              <option>Médio Incompleto</option>
-              <option>Médio Completo</option>
-              <option>Superior Incompleto</option>
-              <option>Superior Completo</option>
+            <label for="escolaridade" data-id="{{user.escolaridade}}">Escolaridade</label>
+            <select id="escolaridade" name="escolaridade" class="form-control" value="">
+              <option id="" value=""></option>
+              <option id="Analfabeto" value="Analfabeto">Analfabeto</option>
+              <option id="Fundamental Incompleto" value="Fundamental Incompleto">Fundamental Incompleto</option>
+              <option id="Fundamental Completo" value="Fundamental Completo">Fundamental Completo</option>
+              <option id="Médio Incompleto" value="Médio Incompleto">Médio Incompleto</option>
+              <option id="Médio Completo" value="Médio Completo">Médio Completo</option>
+              <option id="Superior Incompleto" value="Superior Incompleto">Superior Incompleto</option>
+              <option id="Superior Completo" value="Superior Completo">Superior Completo</option>
             </select>
           </div>
         </div>

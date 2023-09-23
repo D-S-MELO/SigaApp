@@ -48,7 +48,7 @@ const add = async function (request, response, next) {
       // Salvando o usuário no MongoDB usando o Mongoose
       await novaFonte.save();
       request.flash('success_mgs', 'Fonte Cadastrada com Sucesso!');
-      response.redirect('/fonte');
+      response.redirect('/hardware');
     }
   } catch (err) {
     const description =
@@ -89,7 +89,7 @@ const update = async function (request, response, next) {
       especificacao,
     });
     request.flash('success_mgs', 'Fonte Editada com Sucesso!');
-    response.redirect('/fonte');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao atualizar essa fonte!');
   }
@@ -99,7 +99,7 @@ const deletar = async function (request, response, next) {
   try {
     await fonte.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Fonte Excluído com Sucesso!');
-    response.redirect('/fonte');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir essa fonte!');
   }

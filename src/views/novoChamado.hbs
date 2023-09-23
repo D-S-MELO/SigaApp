@@ -1,0 +1,68 @@
+{{>menu}}
+<section class="layout">
+  <div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <div hidden class="search-box">
+      <i class="uil uil-search"></i>
+      <input type="text" placeholder="Search Here..." />
+    </div>
+    <img hidden src="images/user.png" alt="" />
+  </div>
+  <div class="dash-content">
+    {{#if err}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{description}}
+      <hr>
+      <h5>Detalhe do Erro:</h5>
+      <p>{{err}}</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {{/if}}
+    <form class="needs-validation " action="/chamados/cadastro" method="POST">
+      <div class="form-group">
+        <div class="row">
+          <div class="form-group col-sm-12 id">
+            <label for="so">Selecione o Equipamento</label>
+            <h6>(Verifique a Etiqueta Colada no Equipamento)</h6>
+            <select type="text" class="form-control so" id="id" name="id" value="{{_id}}">
+              <option></option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="form-group col-sm-12 local">
+            <label for="local">Local</label>
+            <select type="text" class="form-control so" id="local" name="local" value="{{local}}">
+              <option></option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="form-group col-sm-12 descricao">
+            <label for="descricao">Descrição Rápida do Problema</label>
+            <textarea class="form-control" id="descricao" name="descricao" rows="1"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="form-group col-sm-12 descricao">
+            <label for="descricao_detalhada">Descrição Detalhada</label>
+            <textarea class="form-control" id="descricao_detalhada" name="descricao_detalhada" rows="6"></textarea>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-secondary add" style="margin-top: 32px">
+        Cadastrar
+      </button>
+    </form>
+  </div>
+</section>

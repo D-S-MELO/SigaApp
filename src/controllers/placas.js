@@ -49,7 +49,7 @@ const add = async function (request, response, next) {
       // Salvando o usuário no MongoDB usando o Mongoose
       await novaPlaca.save();
       request.flash('success_mgs', 'Placa de Vídeo Cadastrada com Sucesso!');
-      response.redirect('/placaVideo');
+      response.redirect('/hardware');
     }
   } catch (err) {
     const description =
@@ -101,7 +101,7 @@ const update = async function (request, response, next) {
       especificacao,
     });
     request.flash('success_mgs', 'Pláca de Vídeo Editada com Sucesso!');
-    response.redirect('/placaVideo');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash(
       'erro_mgs',
@@ -114,7 +114,7 @@ const deletar = async function (request, response, next) {
   try {
     await placa.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Placa de Vídeo Excluída com Sucesso!');
-    response.redirect('/placaVideo');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash(
       'erro_mgs',

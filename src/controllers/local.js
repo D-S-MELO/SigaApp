@@ -40,7 +40,7 @@ const add = async function (request, response, next) {
       // Salvando o usuário no MongoDB usando o Mongoose
       await novoLocal.save();
       request.flash('success_mgs', 'Local Cadastrado com Sucesso!');
-      response.redirect('/local');
+      response.redirect('/hardware');
     }
   } catch (err) {
     const description =
@@ -75,7 +75,7 @@ const update = async function (request, response, next) {
       nome,
     });
     request.flash('success_mgs', 'Local Editado com Sucesso!');
-    response.redirect('/local');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir o Local!');
   }
@@ -85,7 +85,7 @@ const deletar = async function (request, response, next) {
   try {
     await Local.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Local Excluído com Sucesso!');
-    response.redirect('/local');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir o local!');
   }

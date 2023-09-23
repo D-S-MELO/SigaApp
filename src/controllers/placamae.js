@@ -67,7 +67,7 @@ const add = async function (request, response, next) {
       // Salvando o usuário no MongoDB usando o Mongoose
       await novaPlaca.save();
       request.flash('success_mgs', 'Placa Mãe Cadastrada com Sucesso!');
-      response.redirect('/placaMae');
+      response.redirect('/hardware');
     }
   } catch (err) {
     const description =
@@ -128,7 +128,7 @@ const update = async function (request, response, next) {
       conectores,
     });
     request.flash('success_mgs', 'Placa Mãe Editada com Sucesso!');
-    response.redirect('/placaMae');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir a Placa Mãe!');
   }
@@ -138,7 +138,7 @@ const deletar = async function (request, response, next) {
   try {
     await placa.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Placa Mãe Excluída com Sucesso!');
-    response.redirect('/placaMae');
+    response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir a Placa Mãe!');
   }
