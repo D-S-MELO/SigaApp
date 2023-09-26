@@ -10,10 +10,8 @@ const processador = require('../model/Processador');
 const So = require('../model/So');
 
 const index = async function (request, response, next) {
-  const jsFiles = ['layout.js', 'controlerHardware.js', 'controllerSo.js'];
-  const armazenamentos = await armazenamento.find({});
+  const jsFiles = ['layout.js', 'controlerHardware.js'];
   const memorias = await memoria.find({});
-  const coolers = await cooler.find({});
   const fontes = await fonte.find({});
   const placaMae = await placa.find({});
   const monitores = await monitor.find({});
@@ -23,8 +21,6 @@ const index = async function (request, response, next) {
   return response.render('hardware', {
     layout: MASTER_DIR,
     jsFiles: { files: jsFiles },
-    armazenamentos,
-    coolers,
     fontes,
     memorias,
     monitores,

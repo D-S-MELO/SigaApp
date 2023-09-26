@@ -22,7 +22,6 @@ const indexCadastro = function (request, response, next) {
 const add = async function (request, response, next) {
   const { nome, fabricante, modelo, capacidade, especificacao } = request.body;
   try {
-    // Verifica se já existe um usuário cadastrado com o mesmo CPF
     const existingArmazenamento = await armazenamento.findOne({ nome });
     if (existingArmazenamento) {
       const description = 'Operação Bloqueada';
@@ -38,7 +37,6 @@ const add = async function (request, response, next) {
         especificacao,
       });
     } else {
-      // Criando um novo usuário com os dados fornecidos
       const novoArmazenamento = new armazenamento({
         nome,
         fabricante,
@@ -46,7 +44,6 @@ const add = async function (request, response, next) {
         capacidade,
         especificacao,
       });
-      // Salvando o usuário no MongoDB usando o Mongoose
       await novoArmazenamento.save();
       request.flash('success_mgs', 'Armazenemto Cadastrada com Sucesso!');
       response.redirect('/hardware');
@@ -82,14 +79,8 @@ const show = async function (request, response, next) {
 };
 
 const update = async function (request, response, next) {
+  const { nome, fabricante, modelo, capacidade, especificacao } = request.body;
   try {
-    const {
-      nome,
-      fabricante,
-      modelo,
-      capacidade,
-      especificacao,
-    } = request.body;
     await armazenamento.findByIdAndUpdate(request.params.id, {
       nome,
       fabricante,
@@ -100,10 +91,20 @@ const update = async function (request, response, next) {
     request.flash('success_mgs', 'Armazenamento Editado com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
-    request.flash(
-      'erro_mgs',
-      'Ocorreu um erro ao atualizar esse armazenamento!'
-    );
+    const description =
+      'Operação Bloqueada! Ocorreu um Erro ao executar a operação';
+    response.render('editarArmazenamento', {
+      layout: MASTER_DIR,
+      err,
+      description,
+      armazenamentos: {
+        nome: nome,
+        fabricante: fabricante,
+        modelo: modelo,
+        capacidade: capacidade,
+        especificacao: especificacao,
+      },
+    });
   }
 };
 
@@ -117,6 +118,26 @@ const deletar = async function (request, response, next) {
   }
 };
 
+const find = async function (request, response, next) {
+  try {
+    const armazenamentos = await armazenamento.find({
+      $or: [{ nome: new RegExp(request.query.nome, 'i') }],
+    });
+    response.json(armazenamentos);
+  } catch (err) {
+    response.status(500).send(err);
+  }
+};
+
+const getDados = async function (request, response, next) {
+  try {
+    const armazenamentos = await armazenamento.find({});
+    response.json(armazenamentos);
+  } catch (err) {
+    response.status(500).send(err);
+  }
+};
+
 module.exports = {
   index,
   indexCadastro,
@@ -124,4 +145,6 @@ module.exports = {
   deletar,
   update,
   show,
+  find,
+  getDados,
 };

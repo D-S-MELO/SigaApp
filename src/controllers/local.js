@@ -2,30 +2,42 @@ const { MASTER_DIR } = require('../helpers/constants');
 const Local = require('../model/Local');
 
 const index = async function (request, response, next) {
-  const jsFiles = ['layout.js', 'controllerAtivos.js'];
-  const local = await Local.find({});
-  return response.render('local', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-    local,
-  });
+  const jsFiles = ['layout.js', 'controlerLocal.js'];
+  try {
+    const local = await Local.find({});
+    return response.render('local', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+      local,
+    });
+  } catch (error) {
+    return response
+      .status(404)
+      .send('Ocorreu um erro, procure o administrador do sistema');
+  }
 };
+
 const indexCadastro = function (request, response, next) {
   const jsFiles = ['layout.js'];
-  return response.render('cadastroLocal', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-  });
+  try {
+    return response.render('cadastroLocal', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+    });
+  } catch (error) {
+    return response
+      .status(404)
+      .send('Ocorreu um erro, procure o administrador do sistema');
+  }
 };
 
 const add = async function (request, response, next) {
   const { nome } = request.body;
   try {
-    // Verifica se já existe um usuário cadastrado com o mesmo CPF
     const existingLocal = await Local.findOne({ nome });
     if (existingLocal) {
       const description = 'Operação Bloqueada';
-      const err = `Local ${existingUser.nome}, já esta cadastrado!`;
+      const err = `Local ${existingLocal.nome}, já esta cadastrado!`;
       response.render('cadastroLocal', {
         layout: MASTER_DIR,
         err,
@@ -33,14 +45,12 @@ const add = async function (request, response, next) {
         nome,
       });
     } else {
-      // Criando um novo usuário com os dados fornecidos
       const novoLocal = new Local({
         nome,
       });
-      // Salvando o usuário no MongoDB usando o Mongoose
       await novoLocal.save();
       request.flash('success_mgs', 'Local Cadastrado com Sucesso!');
-      response.redirect('/hardware');
+      response.redirect('/local');
     }
   } catch (err) {
     const description =
@@ -83,11 +93,34 @@ const update = async function (request, response, next) {
 
 const deletar = async function (request, response, next) {
   try {
-    await Local.findByIdAndDelete(request.params.id);
+    await Locals.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Local Excluído com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir o local!');
+    return response
+      .status(500)
+      .send('Ocorreu um erro, procure o administrador do sistema');
+  }
+};
+
+const findLocal = async function (request, response, next) {
+  try {
+    const local = await Local.find({
+      $or: [{ nome: new RegExp(request.query.nome, 'i') }],
+    });
+    response.json(local);
+  } catch (err) {
+    response.status(500).send(err);
+  }
+};
+
+const getDadosLocal = async function (request, response, next) {
+  try {
+    const local = await Local.find({});
+    response.json(local);
+  } catch (err) {
+    response.status(500).send(err);
   }
 };
 
@@ -98,4 +131,6 @@ module.exports = {
   deletar,
   update,
   show,
+  getDadosLocal,
+  findLocal,
 };

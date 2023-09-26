@@ -17,9 +17,7 @@ function buscaArmazenamento() {
 function editaExcluiArmazenamento() {
   // Adicione um manipulador de eventos 'click' para o botão de excluir
   $('.btn-excluir').on('click', function (event) {
-    // Evite que o clique no botão cause a página a ser recarregada
     event.preventDefault();
-    // Use o SweetAlert2 para exibir a mensagem de confirmação
     Swal.fire({
       title: 'Tem certeza?',
       text:

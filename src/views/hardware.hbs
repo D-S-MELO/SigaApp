@@ -47,37 +47,22 @@
             </div>
           </div>
         </div>
-
-        <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0"
-          width="100%">
+        <table id="tabelaArmazenamento" name"tabelaArmazenamento" class="table table-striped table-bordered table-sm"
+          cellspacing="0" width="100%">
           <thead>
             <tr>
               <th>Armazenamento</th>
-              <th>Açoes</th>
+              <th>Editar</th>
+              <th>Excluir</th>
             </tr>
           </thead>
           <tbody>
-            {{#each armazenamentos}}
-            <tr>
-              <td>{{nome}}</td>
-              <td>
-                <div hidden class="d-inline-block">
-                  <form id="form-editar-{{_id}}" action="/armazenamento/editar/{{_id}}?_method=GET" method="GET">
-                    <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
-                          class="uil uil-pen"></i></button>
-                  </form>
-                </div>
-                <div class="d-inline-block">
-                  <form id="form-excluir-{{_id}}" action="/armazenamento/deletar/{{_id}}?_method=DELETE" method="POST">
-                    <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                        class="uil uil-trash"></i></button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-            {{/each}}
           </tbody>
         </table>
+        <div id="paginacao">
+          <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
+          <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
+        </div>
       </div>
       <div class="form-group tab-content" id="tab2">
         <div class="overview">
@@ -97,37 +82,22 @@
             </div>
           </div>
         </div>
-
-        <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0"
+        <table id="tabelaCooler" name"tabelaCooler" class="table table-striped table-bordered table-sm" cellspacing="0"
           width="100%">
           <thead>
             <tr>
               <th>Cooler</th>
-              <th>Açoes</th>
+              <th>Editar</th>
+              <th>Excluir</th>
             </tr>
           </thead>
           <tbody>
-            {{#each coolers}}
-            <tr>
-              <td>{{nome}}</td>
-              <td>
-                <div hidden class="d-inline-block">
-                  <form id="form-editar-{{_id}}" action="/cooler/editar/{{_id}}?_method=GET" method="GET">
-                    <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
-                          class="uil uil-pen"></i></button>
-                  </form>
-                </div>
-                <div class="d-inline-block">
-                  <form id="form-excluir-{{_id}}" action="/cooler/deletar/{{_id}}?_method=DELETE" method="POST">
-                    <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                        class="uil uil-trash"></i></button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-            {{/each}}
           </tbody>
         </table>
+        <div id="paginacao">
+          <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
+          <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
+        </div>
       </div>
       <div class="form-group tab-content" id="tab3">
         <div class="overview">
@@ -147,37 +117,22 @@
             </div>
           </div>
         </div>
-
-        <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0"
+        <table id="tabelaFonte" name"tabelaFonte" class="table table-striped table-bordered table-sm" cellspacing="0"
           width="100%">
           <thead>
             <tr>
               <th>Fontes</th>
-              <th>Açoes</th>
+              <th>Editar</th>
+              <th>Excluir</th>
             </tr>
           </thead>
           <tbody>
-            {{#each fontes}}
-            <tr>
-              <td>{{nome}}</td>
-              <td>
-                <div hidden class="d-inline-block">
-                  <form id="form-editar-{{_id}}" action="/fonte/editar/{{_id}}?_method=GET" method="GET">
-                    <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
-                          class="uil uil-pen"></i></button>
-                  </form>
-                </div>
-                <div class="d-inline-block">
-                  <form id="form-excluir-{{_id}}" action="/fonte/deletar/{{_id}}?_method=DELETE" method="POST">
-                    <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                        class="uil uil-trash"></i></button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-            {{/each}}
           </tbody>
         </table>
+        <div id="paginacao">
+          <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
+          <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
+        </div>
       </div>
       <div class="form-group tab-content" id="tab4">
         <div class="overview">
@@ -198,37 +153,22 @@
           </div>
         </div>
 
-        <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0"
-          width="100%">
+        <table id="tabelaMemoria" name"tabelaMemoria" class="table table-striped table-bordered table-sm"
+          cellspacing="0" width="100%">
           <thead>
             <tr>
               <th>Memória</th>
-              <th>Açoes</th>
+              <th>Editar</th>
+              <th>Excluir</th>
             </tr>
           </thead>
           <tbody>
-            {{#each memorias}}
-            <tr>
-              <td>{{nome}}</td>
-              <td>
-                <div hidden class="d-inline-block">
-                  <form id="form-editar-{{_id}}" action="/memoriaRam/editar/{{_id}}?_method=GET" method="GET">
-                    <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
-                          class="uil uil-pen"></i></button>
-                  </form>
-                </div>
-                <div class="d-inline-block">
-                  <form id="form-excluir-{{_id}}" action="/memoriaRam/deletar/{{_id}}?_method=DELETE" method="POST">
-                    <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                        class="uil uil-trash"></i></button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-            {{/each}}
           </tbody>
         </table>
-
+        <div id="paginacao">
+          <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
+          <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
+        </div>
       </div>
       <div class="form-group tab-content" id="tab5">
         <div class="overview">
@@ -249,36 +189,22 @@
           </div>
         </div>
 
-        <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0"
-          width="100%">
+        <table id="tabelaMonitor" name"tabelaMonitor" class="table table-striped table-bordered table-sm"
+          cellspacing="0" width="100%">
           <thead>
             <tr>
               <th>Monitor</th>
-              <th>Açoes</th>
+              <th>Editar</th>
+              <th>Excluir</th>
             </tr>
           </thead>
           <tbody>
-            {{#each monitores}}
-            <tr>
-              <td>{{nome}}</td>
-              <td>
-                <div hidden class="d-inline-block">
-                  <form id="form-editar-{{_id}}" action="/monitor/editar/{{_id}}?_method=GET" method="GET">
-                    <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
-                          class="uil uil-pen"></i></button>
-                  </form>
-                </div>
-                <div class="d-inline-block">
-                  <form id="form-excluir-{{_id}}" action="/monitor/deletar/{{_id}}?_method=DELETE" method="POST">
-                    <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                        class="uil uil-trash"></i></button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-            {{/each}}
           </tbody>
         </table>
+        <div id="paginacao">
+          <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
+          <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
+        </div>
       </div>
       <div class="form-group tab-content" id="tab6">
         <div class="overview">
@@ -299,36 +225,22 @@
           </div>
         </div>
 
-        <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0"
-          width="100%">
+        <table id="tabelaPlacaVideo" name"tabelaPlacaVideo" class="table table-striped table-bordered table-sm"
+          cellspacing="0" width="100%">
           <thead>
             <tr>
               <th>Placas</th>
-              <th>Açoes</th>
+              <th>Editar</th>
+              <th>Excluir</th>
             </tr>
           </thead>
           <tbody>
-            {{#each placas}}
-            <tr>
-              <td>{{nome}}</td>
-              <td>
-                <div hidden class="d-inline-block">
-                  <form id="form-editar-{{_id}}" action="/placaVideo/editar/{{_id}}?_method=GET" method="GET">
-                    <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
-                          class="uil uil-pen"></i></button>
-                  </form>
-                </div>
-                <div class="d-inline-block">
-                  <form id="form-excluir-{{_id}}" action="/placaVideo/deletar/{{_id}}?_method=DELETE" method="POST">
-                    <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                        class="uil uil-trash"></i></button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-            {{/each}}
           </tbody>
         </table>
+        <div id="paginacao">
+          <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
+          <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
+        </div>
       </div>
       <div class="form-group tab-content" id="tab7">
         <div class="overview">
@@ -349,36 +261,22 @@
           </div>
         </div>
 
-        <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0"
+        <table id="tabelaPlaca" name"tabelaPlaca" class="table table-striped table-bordered table-sm" cellspacing="0"
           width="100%">
           <thead>
             <tr>
               <th>Placa</th>
-              <th>Açoes</th>
+              <th>Editar</th>
+              <th>Excluir</th>
             </tr>
           </thead>
           <tbody>
-            {{#each placaMae}}
-            <tr>
-              <td>{{nome}}</td>
-              <td>
-                <div hidden class="d-inline-block">
-                  <form id="form-editar-{{_id}}" action="/placaMae/editar/{{_id}}?_method=GET" method="GET">
-                    <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
-                          class="uil uil-pen"></i></button>
-                  </form>
-                </div>
-                <div class="d-inline-block">
-                  <form id="form-excluir-{{_id}}" action="/placaMae/deletar/{{_id}}?_method=DELETE" method="POST">
-                    <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                        class="uil uil-trash"></i></button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-            {{/each}}
           </tbody>
         </table>
+        <div id="paginacao">
+          <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
+          <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
+        </div>
       </div>
       <div class="form-group tab-content" id="tab8">
         <div class="overview">
@@ -405,31 +303,17 @@
           <thead>
             <tr>
               <th>Processador</th>
-              <th>Açoes</th>
+              <th>Editar</th>
+              <th>Excluir</th>
             </tr>
           </thead>
           <tbody>
-            {{#each processadores}}
-            <tr>
-              <td>{{nome}}</td>
-              <td>
-                <div hidden class="d-inline-block">
-                  <form id="form-editar-{{_id}}" action="/processador/editar/{{_id}}?_method=GET" method="GET">
-                    <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
-                          class="uil uil-pen"></i></button>
-                  </form>
-                </div>
-                <div class="d-inline-block">
-                  <form id="form-excluir-{{_id}}" action="/processador/deletar/{{_id}}?_method=DELETE" method="POST">
-                    <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                        class="uil uil-trash"></i></button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-            {{/each}}
           </tbody>
         </table>
+        <div id="paginacao">
+          <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
+          <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
+        </div>
       </div>
       <div class="form-group tab-content" id="tab9">
         <div class="overview">
@@ -440,46 +324,32 @@
         <div class="form-group">
           <div class="row">
             <div class="col-md-8 col-lg-8">
-              <input type="search" class="form-control" id="buscaLocal" name="buscaLocal" placeholder="Busca....">
+              <input type="search" class="form-control" id="buttonSo" name="buttonSo" placeholder="Busca....">
             </div>
             <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
               <form id="form-cadastrar" action="/so/cadastro?_method=GET" method="GET">
-                <button type="submit" id="buttonAddLocal" class="btn btn-secondary btn-block">Cadastrar</button>
+                <button type="submit" id="buttonSo" class="btn btn-secondary btn-block">Cadastrar</button>
               </form>
             </div>
           </div>
         </div>
 
-        <table id="tabela" name"tabela" class="table table-striped table-bordered table-sm" cellspacing="0"
+        <table id="tabelaSo" name"tabelaSo" class="table table-striped table-bordered table-sm" cellspacing="0"
           width="100%">
           <thead>
             <tr>
               <th>Sistema Operacional</th>
-              <th>Açoes</th>
+              <th>Editar</th>
+              <th>Excluir</th>
             </tr>
           </thead>
           <tbody>
-            {{#each so}}
-            <tr>
-              <td>{{nome}}</td>
-              <td>
-                {{!-- <div hidden class="d-inline-block">
-              <form id="form-editar-{{_id}}" action="/local/editar/{{_id}}?_method=GET" method="GET">
-                <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
-                      class="uil uil-pen"></i></button>
-              </form>
-            </div> --}}
-                <div class="d-inline-block">
-                  <form id="form-excluir-{{_id}}" action="/so/deletar/{{_id}}?_method=DELETE" method="POST">
-                    <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                        class="uil uil-trash"></i></button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-            {{/each}}
           </tbody>
         </table>
+        <div id="paginacao">
+          <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
+          <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
+        </div>
       </div>
     </div>
 </section>

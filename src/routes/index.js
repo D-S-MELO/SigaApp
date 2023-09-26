@@ -18,7 +18,7 @@ const monitor = require('../controllers/monitor');
 const cooler = require('../controllers/cooler');
 const hardware = require('../controllers/hardware');
 const chamados = require('../controllers/chamados');
-
+//Rota Principal
 router.get('/', Home.index);
 router.get('/usuario/cadastro', user.indexCardUser);
 router.get('/usuario', user.indexUser);
@@ -48,7 +48,6 @@ router.get('/ativos/getDadosGraficos', ativos.getDadosGraficos);
 router.delete('/ativos/deletar/:id', ativos.deletar);
 router.get('/ativos/editar/:id', ativos.showEquipamento);
 router.put('/ativos/editar/:id', ativos.update);
-router.get('/local', local.index);
 router.get('/placaMae', placaMae.index);
 router.get('/placaMae/cadastro', placaMae.indexCadastro);
 router.post('/placaMae/cadastro', placaMae.add);
@@ -61,13 +60,19 @@ router.post('/processador/cadastro', processador.add);
 router.get('/processador/editar/:id', processador.show);
 router.put('/processador/editar/:id', processador.update);
 router.delete('/processador/deletar/:id', processador.deletar);
+//Rotas Hardware Armazenamento
 router.get('/memoriaRam', memoria.index);
 router.get('/memoriaRam/cadastro', memoria.indexCadastro);
 router.post('/memoriaRam/cadastro', memoria.add);
 router.get('/memoriaRam/editar/:id', memoria.show);
 router.put('/memoriaRam/editar/:id', memoria.update);
 router.delete('/memoriaRam/deletar/:id', memoria.deletar);
+router.get('/memoriaRam/find', memoria.find);
+router.get('/memoriaRam/getDados', memoria.getDados);
+//Rotas Hardware Armazenamento
 router.get('/armazenamento', armazenamento.index);
+router.get('/armazenamento/find', armazenamento.find);
+router.get('/armazenamento/getDados', armazenamento.getDados);
 router.get('/armazenamento/cadastro', armazenamento.indexCadastro);
 router.post('/armazenamento/cadastro', armazenamento.add);
 router.get('/armazenamento/editar/:id', armazenamento.show);
@@ -79,12 +84,15 @@ router.post('/placaVideo/cadastro', placas.add);
 router.get('/placaVideo/editar/:id', placas.show);
 router.put('/placaVideo/editar/:id', placas.update);
 router.delete('/placaVideo/deletar/:id', placas.deletar);
+//Rotas da tela Fonte
 router.get('/fonte', fonte.index);
 router.get('/fonte/cadastro', fonte.indexCadastro);
 router.post('/fonte/cadastro', fonte.add);
 router.get('/fonte/editar/:id', fonte.show);
 router.put('/fonte/editar/:id', fonte.update);
 router.delete('/fonte/deletar/:id', fonte.deletar);
+router.get('/fonte/find', fonte.find);
+router.get('/fonte/getDados', fonte.getDados);
 router.get('/gabinete', gabinete.index);
 router.get('/gabinete/cadastro', gabinete.indexCadastro);
 router.post('/gabinete/cadastro', gabinete.add);
@@ -97,18 +105,28 @@ router.post('/monitor/cadastro', monitor.add);
 router.get('/monitor/editar/:id', monitor.show);
 router.put('/monitor/editar/:id', monitor.update);
 router.delete('/monitor/deletar/:id', monitor.deletar);
+//Rotas da tela cooler
 router.get('/cooler', cooler.index);
 router.get('/cooler/cadastro', cooler.indexCadastro);
 router.post('/cooler/cadastro', cooler.add);
 router.get('/cooler/editar/:id', cooler.show);
 router.put('/cooler/editar/:id', cooler.update);
 router.delete('/cooler/deletar/:id', cooler.deletar);
+router.get('/cooler/find', cooler.find);
+router.get('/cooler/getDados', cooler.getDados);
+//Rotas da tala Sistema Operacional
 router.get('/so', so.index);
 router.get('/so/cadastro', so.indexCadastro);
 router.post('/so/cadastro', so.add);
 router.put('/so/editar/:id', so.update);
 router.delete('/so/deletar/:id', so.deletar);
+router.get('/so/findSo', so.findSo);
+router.get('/so/getDadosSo', so.getDadosSo);
+//Rotas da Tela de local de Atendimento
+router.get('/local', local.index);
 router.get('/local/cadastro', local.indexCadastro);
+router.get('/local/findLocal', local.findLocal);
+router.get('/local/getDadosLocal', local.getDadosLocal);
 router.post('/local/cadastro', local.add);
 router.get('/local/editar/:id', local.show);
 router.put('/local/editar/:id', local.update);

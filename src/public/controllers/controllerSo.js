@@ -1,6 +1,5 @@
 $(document).ready(function () {
   buscaUsuarioTabela();
-  editaExcluiSo();
 });
 
 //Função do campo de busca

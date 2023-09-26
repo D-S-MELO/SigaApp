@@ -21,7 +21,6 @@ const indexCadastro = function (request, response, next) {
 const add = async function (request, response, next) {
   const { nome } = request.body;
   try {
-    // Verifica se já existe um usuário cadastrado com o mesmo CPF
     const existingSo = await So.findOne({ nome });
     if (existingSo) {
       const description = 'Operação Bloqueada';
@@ -33,11 +32,10 @@ const add = async function (request, response, next) {
         nome,
       });
     } else {
-      // Criando um novo usuário com os dados fornecidos
       const novoSo = new So({
         nome,
       });
-      // Salvando o usuário no MongoDB usando o Mongoose
+
       await novoSo.save();
       request.flash(
         'success_mgs',
@@ -100,6 +98,26 @@ const deletar = async function (request, response, next) {
   }
 };
 
+const findSo = async function (request, response, next) {
+  try {
+    const so = await So.find({
+      $or: [{ nome: new RegExp(request.query.nome, 'i') }],
+    });
+    response.json(so);
+  } catch (err) {
+    response.status(500).send(err);
+  }
+};
+
+const getDadosSo = async function (request, response, next) {
+  try {
+    const so = await So.find({});
+    response.json(so);
+  } catch (err) {
+    response.status(500).send(err);
+  }
+};
+
 module.exports = {
   index,
   indexCadastro,
@@ -107,4 +125,6 @@ module.exports = {
   deletar,
   update,
   show,
+  findSo,
+  getDadosSo,
 };

@@ -3,20 +3,36 @@ const memoria = require('../model/Memoria');
 
 const index = async function (request, response, next) {
   const jsFiles = ['layout.js', 'controllerMemoria.js'];
-  const memorias = await memoria.find({});
-  return response.render('memoriaRam', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-    memorias,
-  });
+  try {
+    const memorias = await memoria.find({});
+    return response.render('memoriaRam', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+      memorias,
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
 };
 
 const indexCadastro = function (request, response, next) {
   const jsFiles = ['layout.js'];
-  return response.render('cadastroMemoria', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-  });
+  try {
+    return response.render('cadastroMemoria', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
 };
 
 const add = async function (request, response, next) {
@@ -77,7 +93,11 @@ const show = async function (request, response, next) {
       jsFiles: { files: jsFiles },
     });
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar as memórias');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -100,7 +120,11 @@ const update = async function (request, response, next) {
     request.flash('success_mgs', 'Memória Editada com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao atualizar a memória!');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -110,10 +134,40 @@ const deletar = async function (request, response, next) {
     request.flash('success_mgs', 'Memória Excluído com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao excluir a memória!');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
+};
+const find = async function (request, response, next) {
+  try {
+    const memorias = await memoria.find({
+      $or: [{ nome: new RegExp(request.query.nome, 'i') }],
+    });
+    response.json(memorias);
+  } catch (err) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
+const getDados = async function (request, response, next) {
+  try {
+    const memorias = await memoria.find({});
+    response.json(memorias);
+  } catch (err) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
+};
 module.exports = {
   index,
   indexCadastro,
@@ -121,4 +175,6 @@ module.exports = {
   deletar,
   update,
   show,
+  find,
+  getDados,
 };

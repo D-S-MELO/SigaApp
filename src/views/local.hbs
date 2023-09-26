@@ -33,30 +33,15 @@
       <thead>
         <tr>
           <th>Local</th>
-          <th>Açoes</th>
+          <th>Excluir</th>
         </tr>
       </thead>
       <tbody>
-        {{#each local}}
-        <tr>
-          <td>{{nome}}</td>
-          <td>
-            {{!-- <div hidden class="d-inline-block">
-              <form id="form-editar-{{_id}}" action="/local/editar/{{_id}}?_method=GET" method="GET">
-                <button class="btn btn-link me-2"><i class='bx bxs-edit' id='{{_id}}'><i
-                      class="uil uil-pen"></i></button>
-              </form>
-            </div> --}}
-            <div class="d-inline-block">
-              <form id="form-excluir-{{_id}}" action="/local/deletar/{{_id}}?_method=DELETE" method="POST">
-                <button type="button" class="btn btn-link btn-excluir" data-id="{{_id}}"><i
-                    class="uil uil-trash"></i></button>
-              </form>
-            </div>
-          </td>
-        </tr>
-        {{/each}}
       </tbody>
     </table>
+    <div id="paginacao">
+      <button id="pagina-anterior"><i class="uil uil-angle-left"></i></button>
+      <button id="pagina-proxima"><i class="uil uil-angle-right"></i></button>
+    </div>
   </div>
 </section>

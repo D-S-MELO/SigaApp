@@ -13,16 +13,23 @@ const index = async function (request, response, next) {
 
 const indexCadastro = function (request, response, next) {
   const jsFiles = ['layout.js'];
-  return response.render('cadastroCooler', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-  });
+  try {
+    return response.render('cadastroCooler', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
 };
 
 const add = async function (request, response, next) {
   const { nome, fabricante, modelo, especificacao } = request.body;
   try {
-    // Verifica se já existe um usuário cadastrado com o mesmo CPF
     const existingCooler = await cooler.findOne({ nome });
     if (existingCooler) {
       const description = 'Operação Bloqueada';
@@ -37,14 +44,13 @@ const add = async function (request, response, next) {
         especificacao,
       });
     } else {
-      // Criando um novo usuário com os dados fornecidos
       const novoCooler = new cooler({
         nome,
         fabricante,
         modelo,
         especificacao,
       });
-      // Salvando o usuário no MongoDB usando o Mongoose
+
       await novoCooler.save();
       request.flash('success_mgs', 'Cooler Cadastrado com Sucesso!');
       response.redirect('/hardware');
@@ -74,7 +80,11 @@ const show = async function (request, response, next) {
       jsFiles: { files: jsFiles },
     });
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar os coolers');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -90,7 +100,11 @@ const update = async function (request, response, next) {
     request.flash('success_mgs', 'Cooler Editado com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao atualizar esse cooler!');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -100,7 +114,39 @@ const deletar = async function (request, response, next) {
     request.flash('success_mgs', 'Cooler Excluído com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao excluir esse cooler!');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
+};
+
+const find = async function (request, response, next) {
+  try {
+    const coolers = await cooler.find({
+      $or: [{ nome: new RegExp(request.query.nome, 'i') }],
+    });
+    response.json(coolers);
+  } catch (err) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
+};
+
+const getDados = async function (request, response, next) {
+  try {
+    const coolers = await cooler.find({});
+    response.json(coolers);
+  } catch (err) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -111,4 +157,6 @@ module.exports = {
   deletar,
   update,
   show,
+  getDados,
+  find,
 };
