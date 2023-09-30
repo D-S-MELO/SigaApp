@@ -3,7 +3,6 @@ $(document).ready(function () {
   getDadosCampoLocal();
   getDadosCampoEquipamento();
   cadastraNovoChamado();
-  preencheLocalEquipamento();
 });
 function getDadosCampoLocal() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
@@ -99,7 +98,6 @@ function cadastraNovoChamado() {
     });
   });
 }
-
 //Função do campo de busca
 function buscaChamadoTabela() {
   $('#buscaChamado').on('keyup', function () {

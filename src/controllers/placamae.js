@@ -3,20 +3,36 @@ const placa = require('../model/placaMae');
 
 const index = async function (request, response, next) {
   const jsFiles = ['layout.js', 'controllerPlacaMae.js'];
-  const placaMae = await placa.find({});
-  return response.render('placaMae', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-    placaMae,
-  });
+  try {
+    const placaMae = await placa.find({});
+    return response.render('placaMae', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+      placaMae,
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${error}`
+      );
+  }
 };
 
 const indexCadastro = function (request, response, next) {
   const jsFiles = ['layout.js'];
-  return response.render('cadastroPlacaMae', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-  });
+  try {
+    return response.render('cadastroPlacaMae', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${error}`
+      );
+  }
 };
 
 const add = async function (request, response, next) {
@@ -32,7 +48,6 @@ const add = async function (request, response, next) {
     conectores,
   } = request.body;
   try {
-    // Verifica se já existe um usuário cadastrado com o mesmo CPF
     const existingPlacaMae = await placa.findOne({ nome });
     if (existingPlacaMae) {
       const description = 'Operação Bloqueada';
@@ -52,7 +67,6 @@ const add = async function (request, response, next) {
         conectores,
       });
     } else {
-      // Criando um novo usuário com os dados fornecidos
       const novaPlaca = new placa({
         nome,
         fabricante,
@@ -64,7 +78,6 @@ const add = async function (request, response, next) {
         graficos,
         conectores,
       });
-      // Salvando o usuário no MongoDB usando o Mongoose
       await novaPlaca.save();
       request.flash('success_mgs', 'Placa Mãe Cadastrada com Sucesso!');
       response.redirect('/hardware');
@@ -99,23 +112,27 @@ const show = async function (request, response, next) {
       jsFiles: { files: jsFiles },
     });
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar as placas');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
 const update = async function (request, response, next) {
+  const {
+    nome,
+    fabricante,
+    modelo,
+    tipo,
+    chipset,
+    memoria,
+    slots,
+    graficos,
+    conectores,
+  } = request.body;
   try {
-    const {
-      nome,
-      fabricante,
-      modelo,
-      tipo,
-      chipset,
-      memoria,
-      slots,
-      graficos,
-      conectores,
-    } = request.body;
     await placa.findByIdAndUpdate(request.params.id, {
       nome,
       fabricante,
@@ -130,7 +147,24 @@ const update = async function (request, response, next) {
     request.flash('success_mgs', 'Placa Mãe Editada com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao excluir a Placa Mãe!');
+    const description =
+      'Operação Bloqueada! Ocorreu um Erro ao executar a operação';
+    response.render('editarPlacaMae', {
+      layout: MASTER_DIR,
+      err,
+      description,
+      placaMae: {
+        nome: nome,
+        fabricante: fabricante,
+        modelo: modelo,
+        tipo: tipo,
+        chipset: chipset,
+        memoria: memoria,
+        slots: slots,
+        graficos: graficos,
+        conectores: conectores,
+      },
+    });
   }
 };
 
@@ -143,7 +177,33 @@ const deletar = async function (request, response, next) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir a Placa Mãe!');
   }
 };
+const find = async function (request, response, next) {
+  try {
+    const placaMae = await placa.find({
+      $or: [{ nome: new RegExp(request.query.nome, 'i') }],
+    });
+    response.json(placaMae);
+  } catch (err) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
+};
 
+const getDados = async function (request, response, next) {
+  try {
+    const placaMae = await placa.find({});
+    response.json(placaMae);
+  } catch (err) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
+};
 module.exports = {
   index,
   indexCadastro,
@@ -151,4 +211,6 @@ module.exports = {
   deletar,
   update,
   show,
+  getDados,
+  find,
 };

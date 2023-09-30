@@ -93,9 +93,9 @@ const update = async function (request, response, next) {
 
 const deletar = async function (request, response, next) {
   try {
-    await Locals.findByIdAndDelete(request.params.id);
+    await Local.findByIdAndDelete(request.params.id);
     request.flash('success_mgs', 'Local Excluído com Sucesso!');
-    response.redirect('/hardware');
+    response.redirect('/local');
   } catch (err) {
     request.flash('erro_mgs', 'Ocorreu um erro ao excluir o local!');
     return response

@@ -98,7 +98,7 @@ const deletar = async function (request, response, next) {
   }
 };
 
-const findSo = async function (request, response, next) {
+const find = async function (request, response, next) {
   try {
     const so = await So.find({
       $or: [{ nome: new RegExp(request.query.nome, 'i') }],
@@ -109,7 +109,7 @@ const findSo = async function (request, response, next) {
   }
 };
 
-const getDadosSo = async function (request, response, next) {
+const getDados = async function (request, response, next) {
   try {
     const so = await So.find({});
     response.json(so);
@@ -125,6 +125,6 @@ module.exports = {
   deletar,
   update,
   show,
-  findSo,
-  getDadosSo,
+  find,
+  getDados,
 };

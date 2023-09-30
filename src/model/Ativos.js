@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const AtivoSchema = new Schema(
   {
-    fabricante: {
+    nome: {
       type: String,
       required: true,
     },

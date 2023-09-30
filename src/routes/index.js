@@ -48,18 +48,24 @@ router.get('/ativos/getDadosGraficos', ativos.getDadosGraficos);
 router.delete('/ativos/deletar/:id', ativos.deletar);
 router.get('/ativos/editar/:id', ativos.showEquipamento);
 router.put('/ativos/editar/:id', ativos.update);
+//Rotas Placas Mãe
 router.get('/placaMae', placaMae.index);
 router.get('/placaMae/cadastro', placaMae.indexCadastro);
 router.post('/placaMae/cadastro', placaMae.add);
 router.get('/placaMae/editar/:id', placaMae.show);
 router.put('/placaMae/editar/:id', placaMae.update);
 router.delete('/placaMae/deletar/:id', placaMae.deletar);
+router.get('/placaMae/find', placaMae.find);
+router.get('/placaMae/getDados', placaMae.getDados);
+//Rotas Processador
 router.get('/processador', processador.index);
 router.get('/processador/cadastro', processador.indexCadastro);
 router.post('/processador/cadastro', processador.add);
 router.get('/processador/editar/:id', processador.show);
 router.put('/processador/editar/:id', processador.update);
 router.delete('/processador/deletar/:id', processador.deletar);
+router.get('/processador/find', processador.find);
+router.get('/processador/getDados', processador.getDados);
 //Rotas Hardware Armazenamento
 router.get('/memoriaRam', memoria.index);
 router.get('/memoriaRam/cadastro', memoria.indexCadastro);
@@ -78,12 +84,15 @@ router.post('/armazenamento/cadastro', armazenamento.add);
 router.get('/armazenamento/editar/:id', armazenamento.show);
 router.put('/armazenamento/editar/:id', armazenamento.update);
 router.delete('/armazenamento/deletar/:id', armazenamento.deletar);
+//Rotas da tela Placa Video
 router.get('/placaVideo', placas.index);
 router.get('/placaVideo/cadastro', placas.indexCadastro);
 router.post('/placaVideo/cadastro', placas.add);
 router.get('/placaVideo/editar/:id', placas.show);
 router.put('/placaVideo/editar/:id', placas.update);
 router.delete('/placaVideo/deletar/:id', placas.deletar);
+router.get('/placaVideo/find', placas.find);
+router.get('/placaVideo/getDados', placas.getDados);
 //Rotas da tela Fonte
 router.get('/fonte', fonte.index);
 router.get('/fonte/cadastro', fonte.indexCadastro);
@@ -99,12 +108,15 @@ router.post('/gabinete/cadastro', gabinete.add);
 router.get('/gabinete/editar/:id', gabinete.show);
 router.put('/gabinete/editar/:id', gabinete.update);
 router.delete('/gabinete/deletar/:id', gabinete.deletar);
+//Rotas da tela cooler
 router.get('/monitor', monitor.index);
 router.get('/monitor/cadastro', monitor.indexCadastro);
 router.post('/monitor/cadastro', monitor.add);
 router.get('/monitor/editar/:id', monitor.show);
 router.put('/monitor/editar/:id', monitor.update);
 router.delete('/monitor/deletar/:id', monitor.deletar);
+router.get('/monitor/find', monitor.find);
+router.get('/monitor/getDados', monitor.getDados);
 //Rotas da tela cooler
 router.get('/cooler', cooler.index);
 router.get('/cooler/cadastro', cooler.indexCadastro);
@@ -120,8 +132,8 @@ router.get('/so/cadastro', so.indexCadastro);
 router.post('/so/cadastro', so.add);
 router.put('/so/editar/:id', so.update);
 router.delete('/so/deletar/:id', so.deletar);
-router.get('/so/findSo', so.findSo);
-router.get('/so/getDadosSo', so.getDadosSo);
+router.get('/so/find', so.find);
+router.get('/so/getDados', so.getDados);
 //Rotas da Tela de local de Atendimento
 router.get('/local', local.index);
 router.get('/local/cadastro', local.indexCadastro);
@@ -132,6 +144,7 @@ router.get('/local/editar/:id', local.show);
 router.put('/local/editar/:id', local.update);
 router.delete('/local/deletar/:id', local.deletar);
 router.get('/hardware', hardware.index);
+//Rotas da telas de Chamados
 router.get('/chamados', chamados.index);
 router.get('/chamados/cadastro', chamados.indexCadastro);
 router.post('/chamados/cadastro', chamados.add);

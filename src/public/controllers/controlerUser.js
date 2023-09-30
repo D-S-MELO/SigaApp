@@ -91,7 +91,6 @@ function montaTabelaComPaginacao(data) {
       data
     );
 
-    console.log(data.length <= registrosPorPagina);
     exibirDados(
       data,
       data.length - registrosPorPagina,
@@ -102,7 +101,6 @@ function montaTabelaComPaginacao(data) {
   });
   // Exibir dados iniciais
   var total = registrosPorPagina < data.length;
-  console.log(total);
   exibirDados(
     data,
     0,

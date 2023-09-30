@@ -3,26 +3,41 @@ const processador = require('../model/Processador');
 
 const index = async function (request, response, next) {
   const jsFiles = ['layout.js', 'controllerProcessador.js'];
-  const processadores = await processador.find({});
-  return response.render('processador', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-    processadores,
-  });
+  try {
+    const processadores = await processador.find({});
+    return response.render('processador', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+      processadores,
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${error}`
+      );
+  }
 };
 
 const indexCadastro = function (request, response, next) {
   const jsFiles = ['layout.js'];
-  return response.render('cadastroProcessador', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-  });
+  try {
+    return response.render('cadastroProcessador', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${error}`
+      );
+  }
 };
 
 const add = async function (request, response, next) {
   const { nome, fabricante, modelo, especificacao } = request.body;
   try {
-    // Verifica se já existe um usuário cadastrado com o mesmo CPF
     const existingProcessador = await processador.findOne({ nome });
     if (existingProcessador) {
       const description = 'Operação Bloqueada';
@@ -37,7 +52,6 @@ const add = async function (request, response, next) {
         especificacao,
       });
     } else {
-      // Criando um novo usuário com os dados fornecidos
       const novoProcessador = new processador({
         nome,
         fabricante,
@@ -74,13 +88,17 @@ const show = async function (request, response, next) {
       jsFiles: { files: jsFiles },
     });
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar os processadores');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
 const update = async function (request, response, next) {
+  const { nome, fabricante, modelo, especificacao } = request.body;
   try {
-    const { nome, fabricante, modelo, especificacao } = request.body;
     await processador.findByIdAndUpdate(request.params.id, {
       nome,
       fabricante,
@@ -90,7 +108,19 @@ const update = async function (request, response, next) {
     request.flash('success_mgs', 'Processador Editado com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao atualizar o processador!');
+    const description =
+      'Operação Bloqueada! Ocorreu um Erro ao executar a operação';
+    response.render('editarProcessador', {
+      layout: MASTER_DIR,
+      err,
+      description,
+      processadores: {
+        nome: nome,
+        fabricante: fabricante,
+        modelo: modelo,
+        especificacao: especificacao,
+      },
+    });
   }
 };
 
@@ -100,10 +130,40 @@ const deletar = async function (request, response, next) {
     request.flash('success_mgs', 'Processador Excluído com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao excluir o processador!');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
+};
+const find = async function (request, response, next) {
+  try {
+    const processadores = await processador.find({
+      $or: [{ nome: new RegExp(request.query.nome, 'i') }],
+    });
+    response.json(processadores);
+  } catch (err) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
+const getDados = async function (request, response, next) {
+  try {
+    const processadores = await processador.find({});
+    response.json(processadores);
+  } catch (err) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
+};
 module.exports = {
   index,
   indexCadastro,
@@ -111,4 +171,6 @@ module.exports = {
   deletar,
   update,
   show,
+  find,
+  getDados,
 };

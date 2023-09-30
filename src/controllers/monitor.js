@@ -3,26 +3,41 @@ const monitor = require('../model/Monitor');
 
 const index = async function (request, response, next) {
   const jsFiles = ['layout.js', 'controllerMonitor.js'];
-  const monitores = await monitor.find({});
-  return response.render('monitor', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-    monitores,
-  });
+  try {
+    const monitores = await monitor.find({});
+    return response.render('monitor', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+      monitores,
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${error}`
+      );
+  }
 };
 
 const indexCadastro = function (request, response, next) {
   const jsFiles = ['layout.js'];
-  return response.render('cadastroMonitor', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-  });
+  try {
+    return response.render('cadastroMonitor', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${error}`
+      );
+  }
 };
 
 const add = async function (request, response, next) {
   const { nome, fabricante, modelo, especificacao } = request.body;
   try {
-    // Verifica se já existe um usuário cadastrado com o mesmo CPF
     const existingMonitor = await monitor.findOne({ nome });
     if (existingMonitor) {
       const description = 'Operação Bloqueada';
@@ -37,14 +52,12 @@ const add = async function (request, response, next) {
         especificacao,
       });
     } else {
-      // Criando um novo usuário com os dados fornecidos
       const novoMonitor = new monitor({
         nome,
         fabricante,
         modelo,
         especificacao,
       });
-      // Salvando o usuário no MongoDB usando o Mongoose
       await novoMonitor.save();
       request.flash('success_mgs', 'Monitor Cadastrado com Sucesso!');
       response.redirect('/hardware');
@@ -74,13 +87,16 @@ const show = async function (request, response, next) {
       jsFiles: { files: jsFiles },
     });
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar os monitores');
+    return response.render('editarMonitor', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+    });
   }
 };
 
 const update = async function (request, response, next) {
+  const { nome, fabricante, modelo, especificacao } = request.body;
   try {
-    const { nome, fabricante, modelo, especificacao } = request.body;
     await monitor.findByIdAndUpdate(request.params.id, {
       nome,
       fabricante,
@@ -90,7 +106,19 @@ const update = async function (request, response, next) {
     request.flash('success_mgs', 'Monitor Editado com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao atualizar esse monitor!');
+    const description =
+      'Operação Bloqueada! Ocorreu um Erro ao executar a operação';
+    response.render('editarMonitor', {
+      layout: MASTER_DIR,
+      err,
+      description,
+      monitores: {
+        nome: nome,
+        fabricante: fabricante,
+        modelo: modelo,
+        especificacao: especificacao,
+      },
+    });
   }
 };
 
@@ -100,7 +128,39 @@ const deletar = async function (request, response, next) {
     request.flash('success_mgs', 'Monitor Excluído com Sucesso!');
     response.redirect('/hardware');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao excluir esse monitor!');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${error}`
+      );
+  }
+};
+
+const find = async function (request, response, next) {
+  try {
+    const monitores = await monitor.find({
+      $or: [{ nome: new RegExp(request.query.nome, 'i') }],
+    });
+    response.json(monitores);
+  } catch (err) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
+  }
+};
+
+const getDados = async function (request, response, next) {
+  try {
+    const monitores = await monitor.find({});
+    response.json(monitores);
+  } catch (err) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -111,4 +171,6 @@ module.exports = {
   deletar,
   update,
   show,
+  getDados,
+  find,
 };

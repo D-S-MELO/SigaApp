@@ -12,9 +12,8 @@ function habilitaAbas() {
     $('.tab-content').hide(); // Oculta todos os conteúdos das abas
     $('#' + tabId).show(); // Mostra o conteúdo da aba clicada
     let idTab = tabelasPorTabs(tabId);
-    let indiceRota = retornaIndiceRota(idTab);
-    carregaDados(idTab, indiceRota);
-    localStorage.setItem('latTabOpeb', `${tabId}`);
+    getDados(idTab.tabTable, idTab.routes);
+    localStorage.setItem('latTabOpeb', `${idTab.tabId}`);
   });
 }
 
@@ -22,12 +21,14 @@ function habilitaAbas() {
 function verificarUltimaAbaAberta() {
   let tabID = localStorage.getItem('latTabOpeb');
   $('#' + tabID).show();
+  let idTab = tabelasPorTabs(tabID);
+  getDados(idTab.tabTable, idTab.routes);
 }
 
 function habilitaBuscaDadosTabelas() {
   let timeout;
   $(
-    '#buscaArmazenamento ,#buscaCooler,#buscaFonte,#buscaMemoria,#buscaMonitor,#buscaPlaca,#buscaPlaca,#buscaProcessador,#buscaLocal'
+    '#buscaArmazenamento ,#buscaCooler,#buscaFonte,#buscaMemoria,#buscaMonitor,#buscaPlacaVideo,#buscaPlacaMae,#buscaProcessador,#buscaSo'
   ).on('input', function () {
     clearTimeout(timeout);
     timeout = setTimeout(function () {
@@ -55,10 +56,9 @@ function getDados(idtab, indiceRota) {
 function buscaDadosTabela() {
   const tabID = localStorage.getItem('latTabOpeb');
   const tab = tabelasPorTabs(tabID);
-  const indiceRota = retornaIndiceRota(tab);
-  const buscaIndiceValorBusca = retornaIndiceValorBusca(tab);
+  const indiceRota = tab.routes;
+  const buscaIndiceValorBusca = tab.buttonFind;
   const meuInput = $(`${buscaIndiceValorBusca}`);
-
   let timeout;
   $(`${buscaIndiceValorBusca}`).on('input', function () {
     clearTimeout(timeout);
@@ -70,7 +70,7 @@ function buscaDadosTabela() {
         },
         dataType: 'json',
         success: function (data) {
-          montaTabelaComPaginacao(data, tab);
+          montaTabelaComPaginacao(data, tab.tabId, indiceRota);
         },
         error: function (xhr, status, error) {
           mostraErro('Ocorreu um erro ao buscar os dados cadastrados!');
@@ -105,65 +105,62 @@ function clickBotaoExcluir() {
 }
 
 // Função responsável por montar a tabela com paginação
-function montaTabelaComPaginacao(data, idtab) {
-  var registrosPorPagina = 10;
-  var paginaAtual = 1;
-  console.log('Aqui', idtab);
+function montaTabelaComPaginacao(data, idtab, idtTabRoutes) {
+  var registrosPorPagina = 5;
+  var paginaAtual = 0;
   $('#pagina-anterior').click(function () {
     paginaAtual = paginaAnterior(paginaAtual);
     exibirDados(
       data,
       (paginaAtual - 1) * registrosPorPagina,
-      paginaAtual * registrosPorPagina
+      paginaAtual * registrosPorPagina,
+      idtab,
+      idtTabRoutes
     );
   });
 
   $('#pagina-proxima').click(function () {
-    paginaAtual = paginaProxima(
-      paginaAtual,
-      paginaAtual * registrosPorPagina,
-      data
-    );
-
+    paginaAtual = paginaProxima(paginaAtual, registrosPorPagina, data);
     exibirDados(
       data,
-      data.length - registrosPorPagina,
-      data.length <= registrosPorPagina
-        ? data.length
-        : data.length / paginaAtual
+      paginaAtual * registrosPorPagina > registrosPorPagina
+        ? registrosPorPagina
+        : paginaAtual * registrosPorPagina,
+      data.length < registrosPorPagina ? registrosPorPagina : data.length,
+      idtab,
+      idtTabRoutes
     );
   });
+
   // Exibir dados iniciais
-  var total = registrosPorPagina < data.length;
   exibirDados(
     data,
     0,
-    registrosPorPagina < data.length ? registrosPorPagina : 10,
-    idtab
+    registrosPorPagina < data.length ? registrosPorPagina : data.length,
+    idtab,
+    idtTabRoutes
   );
 }
 
 //Função Responsável por exibir os dados com paginação
-function exibirDados(data, startIndex, endIndex, idtab) {
+function exibirDados(data, startIndex, endIndex, idtab, idtTabRoutes) {
   var tabela = $(`#${idtab} tbody`);
   tabela.empty();
-  var prefixRota = retornaIndiceRota(idtab);
   if (data) {
     for (var i = startIndex; i < endIndex; i++) {
       var row = $('<tr>');
       row.append($('<td>').text(data[i].nome));
       row.append(
         $(
-          `<td><div class="d-inline-block"><form id="form-edita-${data[i]._id}" action="/${prefixRota}/editar/${data[i]._id}?_method=GET" method="GET"><button class="btn btn-link me-2"><i class='bx bxs-edit' id='${data[i]._id}'><i
+          `<td><div class="d-inline-block"><form id="form-edita-${data[i]._id}" action="/${idtTabRoutes}/editar/${data[i]._id}?_method=GET" method="GET"><button class="btn btn-link me-2"><i class='bx bxs-edit' id='${data[i]._id}'><i
           class="uil uil-pen"></i></button></form>
           </div>
           `
         )
       );
-      row.append(`<td><div class="d-inline-block"><form id="form-excluir-${data[i]._id}" action="/${prefixRota}/deletar/${data[i]._id}?_method=DELETE" method="POST"><button type="button" class="btn btn-link btn-excluir" data-id=${data[i]._id}><i
+      row.append(`<td><div class="d-inline-block"><form id="form-excluir-${data[i]._id}" action="/${idtTabRoutes}/deletar/${data[i]._id}?_method=DELETE" method="POST"><button type="button" class="btn btn-link btn-excluir" data-id=${data[i]._id}><i
       class="uil uil-trash"></i></button></form>
       </div>`);
-
       tabela.append(row);
       clickBotaoExcluir();
     }
@@ -181,7 +178,7 @@ function paginaAnterior(paginaAtual) {
 
 // Função Responsável pelos botões avançar e voltar da tabela
 function paginaProxima(paginaAtual, endIndex, data) {
-  if (endIndex < data.length) {
+  if (paginaAtual * endIndex <= data.length) {
     paginaAtual++;
     return paginaAtual;
   }
@@ -199,72 +196,66 @@ function mostraErro(mensagem) {
     width: '22em',
   });
 }
-
+// Retorna as informações das tabs de Hardware, rotas, id,nome dos botões de buscas e nome das tabelas
 function tabelasPorTabs(tab) {
   var data = [
-    { tabId: 'tab1', tabTable: 'tabelaArmazenamento' },
-    { tabId: 'tab2', tabTable: 'tabelaCooler' },
-    { tabId: 'tab3', tabTable: 'tabelaFonte' },
-    { tabId: 'tab4', tabTable: 'tabelaMemoria' },
+    {
+      tabId: 'tab1',
+      tabTable: 'tabelaArmazenamento',
+      routes: 'armazenamento',
+      buttonFind: '#buscaArmazenamento',
+    },
+    {
+      tabId: 'tab2',
+      tabTable: 'tabelaCooler',
+      routes: 'cooler',
+      buttonFind: '#buscaCooler',
+    },
+    {
+      tabId: 'tab3',
+      tabTable: 'tabelaFonte',
+      routes: 'fonte',
+      buttonFind: '#buscaFonte',
+    },
+    {
+      tabId: 'tab4',
+      tabTable: 'tabelaMemoria',
+      routes: 'memoriaRam',
+      buttonFind: '#buscaMemoria',
+    },
+    {
+      tabId: 'tab5',
+      tabTable: 'tabelaMonitor',
+      routes: 'monitor',
+      buttonFind: '#buscaMonitor',
+    },
+    {
+      tabId: 'tab6',
+      tabTable: 'tabelaPlacaVideo',
+      routes: 'placaVideo',
+      buttonFind: '#buscaPlacaVideo',
+    },
+    {
+      tabId: 'tab7',
+      tabTable: 'tabelaPlacaMae',
+      routes: 'placaMae',
+      buttonFind: '#buscaPlacaMae',
+    },
+    {
+      tabId: 'tab8',
+      tabTable: 'tabelaProcessador',
+      routes: 'processador',
+      buttonFind: '#buscaProcessador',
+    },
+    {
+      tabId: 'tab9',
+      tabTable: 'tabelaSo',
+      routes: 'so',
+      buttonFind: '#buscaSo',
+    },
   ];
   var indice = data.find(function (objeto) {
     return objeto.tabId === tab;
   });
-  return indice.tabTable;
-}
-
-function retornaIndiceRota(id) {
-  switch (id) {
-    case 'tabelaArmazenamento':
-      return 'armazenamento';
-      break;
-    case 'tabelaCooler':
-      return 'cooler';
-      break;
-    case 'tabelaFonte':
-      return 'fonte';
-      break;
-    case 'tabelaMemoria':
-      return 'memoriaRam';
-      break;
-    default:
-      break;
-  }
-}
-function retornaIndiceValorBusca(id) {
-  switch (id) {
-    case 'tabelaArmazenamento':
-      return '#buscaArmazenamento';
-      break;
-    case 'tabelaCooler':
-      return '#buscaCooler';
-      break;
-    case 'tabelaFonte':
-      return '#buscaFonte';
-      break;
-    case 'tabelaMemoria':
-      return '#buscaMemoria';
-      break;
-    default:
-      break;
-  }
-}
-
-function carregaDados(idtab, indiceRota) {
-  switch (idtab) {
-    case 'tabelaArmazenamento':
-      getDados(idtab, indiceRota);
-      break;
-    case 'tabelaCooler':
-      getDados(idtab, indiceRota);
-      break;
-    case 'tabelaFonte':
-      getDados(idtab, indiceRota);
-      break;
-    case 'tabelaMemoria':
-      getDados(idtab, indiceRota);
-      break;
-    default:
-      break;
-  }
+  return indice;
 }

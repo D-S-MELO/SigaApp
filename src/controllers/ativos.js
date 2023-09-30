@@ -15,10 +15,18 @@ const Ativos = require('../model/Ativos');
 
 const indexAtivos = function (request, response, next) {
   const jsFiles = ['layout.js', 'controllerAtivos.js'];
-  return response.render('cadastroAtivos', {
-    layout: MASTER_DIR,
-    jsFiles: { files: jsFiles },
-  });
+  try {
+    return response.render('cadastroAtivos', {
+      layout: MASTER_DIR,
+      jsFiles: { files: jsFiles },
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${error}`
+      );
+  }
 };
 const show = async function (request, response, next) {
   const jsFiles = ['layout.js', 'controllerAtivos.js'];
@@ -30,7 +38,11 @@ const show = async function (request, response, next) {
       ativos,
     });
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar os Equipamentos');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 const getDadosAtivos = async function (request, response, next) {
@@ -40,7 +52,11 @@ const getDadosAtivos = async function (request, response, next) {
     const jsonContent = JSON.stringify(responseData);
     return response.end(jsonContent);
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar os Equipamentos');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -58,7 +74,11 @@ const getDadosGraficos = async function (request, response, next) {
     const jsonContent = JSON.stringify(responseData);
     return response.end(jsonContent);
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar os Equipamentos');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -69,7 +89,11 @@ const local = async function (request, response, next) {
       response.json({ locais });
     }
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao requisitar os locais');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -80,7 +104,11 @@ const so = async function (request, response, next) {
       response.json({ so });
     }
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao requisitar os locais');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -91,7 +119,11 @@ const placa = async function (request, response, next) {
       response.json({ placaMae });
     }
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao requisitar as placas mães');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -102,7 +134,11 @@ const processadores = async function (request, response, next) {
       response.json({ cpu });
     }
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao requisitar os processadores');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 
@@ -113,7 +149,11 @@ const memoria = async function (request, response, next) {
       response.json({ memori });
     }
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao requisitar as memórias');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 const armazenamentos = async function (request, response, next) {
@@ -123,10 +163,11 @@ const armazenamentos = async function (request, response, next) {
       response.json({ ssdHDD });
     }
   } catch (err) {
-    request.flash(
-      'erro_mgs',
-      'Ocorreu um erro ao requisitar os Armazenamentos'
-    );
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 const fontes = async function (request, response, next) {
@@ -136,7 +177,11 @@ const fontes = async function (request, response, next) {
       response.json({ fontes });
     }
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao requisitar as fontes');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 const placaVideo = async function (request, response, next) {
@@ -146,10 +191,11 @@ const placaVideo = async function (request, response, next) {
       response.json({ Placas });
     }
   } catch (err) {
-    request.flash(
-      'erro_mgs',
-      'Ocorreu um erro ao requisitar as placas de vídeos'
-    );
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 const monitors = async function (request, response, next) {
@@ -159,7 +205,11 @@ const monitors = async function (request, response, next) {
       response.json({ monitores });
     }
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao requisitar os monitores');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 const coolers = async function (request, response, next) {
@@ -169,7 +219,11 @@ const coolers = async function (request, response, next) {
       response.json({ coler });
     }
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao requisitar os coolers');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 const gabinetes = async function (request, response, next) {
@@ -179,9 +233,14 @@ const gabinetes = async function (request, response, next) {
       response.json({ gabinet });
     }
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao requisitar os monitores');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
+
 const add = async function (request, response, next) {
   const dados = request.body;
   const fabricante = dados[0];
@@ -204,10 +263,7 @@ const add = async function (request, response, next) {
     await novoAtivo.save();
     request.flash('success_mgs', 'Ativo Cadastrado com Sucesso!');
     response.redirect('/ativos');
-  } catch (error) {
-    console.log(error);
-    response.json({ error: false, error });
-  }
+  } catch (error) {}
 };
 
 const deletar = async function (request, response, next) {
@@ -216,19 +272,23 @@ const deletar = async function (request, response, next) {
     request.flash('success_mgs', 'Equipamento Excluído com Sucesso!');
     response.redirect('/ativos');
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao excluir o equipamento!');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 const update = async function (request, response, next) {
   const dados = request.body;
-  const fabricante = dados[0];
+  const nome = dados[0];
   const local = dados[1];
   const situacao = dados[2];
   const dataInstalacao = dados[3];
   const componentes = dados[4];
   try {
     const ativo = {
-      fabricante,
+      nome,
       local,
       situacao,
       dataInstalacao,
@@ -256,7 +316,11 @@ const showEquipamento = async function (request, response, next) {
       jsFiles: { files: jsFiles },
     });
   } catch (err) {
-    request.flash('erro_mgs', 'Ocorreu um erro ao recuperar o usuário');
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${err}`
+      );
   }
 };
 module.exports = {
