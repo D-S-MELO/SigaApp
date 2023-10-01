@@ -1,6 +1,6 @@
 $(document).ready(function () {
   getDadosCampoLocal();
-  buscaUsuarioTabela();
+  buscaAtivoTabela();
   editaExcluiUsuarios();
   getDadosCampoSo();
   getDadosCampoPlacaMae();
@@ -16,7 +16,25 @@ $(document).ready(function () {
   montaTabela();
   cadastraNovoAtivo();
   editaAtivo();
+  getDadosAtivos();
 });
+
+//Responsável por retornar os dados de usuários
+function getDadosAtivos() {
+  // Realiza uma requisição Ajax para buscar os dados do servidor
+  $.ajax({
+    url: '/ativos/getDadosAtivos',
+    dataType: 'json',
+    success: function (data) {
+      montaTabelaComPaginacao(data.ativos); // monta a tabela com os dados buscados
+    },
+    error: function (xhr, status, error) {
+      mostraMensagem('Atenção!', error.responseText, 'error');
+    },
+  });
+}
+
+//Função responsável por retornar os dados do campo select de local
 function getDadosCampoLocal() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -50,10 +68,12 @@ function getDadosCampoLocal() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar os local: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
+//Função responsável por retornar os dados do campo select de Sistemas Operacional
 function getDadosCampoSo() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -86,17 +106,19 @@ function getDadosCampoSo() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar os Sistema Operacional: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
+//Função responsável por retornar os dados do campo select de Placa Mãe
 function getDadosCampoPlacaMae() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
     url: '/ativosAdd/placaMae',
     dataType: 'json',
     success: function (data) {
-      const selectElement = document.getElementById('placaMae');
+      const selectElement = document.getElementById('placa_mae');
       if (selectElement !== null) {
         while (selectElement.firstChild) {
           selectElement.removeChild(selectElement.lastChild);
@@ -122,10 +144,12 @@ function getDadosCampoPlacaMae() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar Placa Mãe: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
+//Função responsável por retornar os dados do campo select de Processadores
 function getDadosCampoProcessadores() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -158,10 +182,12 @@ function getDadosCampoProcessadores() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar os processadores: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
+//Função responsável por retornar os dados do campo select de Memória
 function getDadosCampoMemorias() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -194,10 +220,12 @@ function getDadosCampoMemorias() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar as memorias: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
+//Função responsável por retornar os dados do campo select de Armazenamento
 function getDadosCampoArmazenamento() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -230,10 +258,12 @@ function getDadosCampoArmazenamento() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar os Armazenamentos: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
+//Função responsável por retornar os dados do campo select de Fonte
 function getDadosCampoFonte() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -266,10 +296,12 @@ function getDadosCampoFonte() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar as Fontes: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
+//Função responsável por retornar os dados do campo select de Placa de Vídeo
 function getDadosCampoPlacaVideo() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -302,10 +334,12 @@ function getDadosCampoPlacaVideo() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar as Fontes: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
+//Função responsável por retornar os dados do campo select de Monitor
 function getDadosCampoMonitores() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -338,10 +372,12 @@ function getDadosCampoMonitores() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar as Fontes: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
+//Função responsável por retornar os dados do campo select de Cooler
 function getDadosCampoCooler() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -374,10 +410,12 @@ function getDadosCampoCooler() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar as Fontes: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
+//Função responsável por retornar os dados do campo select de Gabinete
 function getDadosCampoGabinete() {
   // Realiza uma requisição Ajax para buscar os dados do servidor
   $.ajax({
@@ -410,19 +448,37 @@ function getDadosCampoGabinete() {
       }
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar as Fontes: ' + error);
+      mostraMensagem('Atenção!', error.responseText, 'error');
     },
   });
 }
+
 //Função do campo de busca
-function buscaUsuarioTabela() {
-  $('#buscaequip').on('keyup', function () {
-    var value = $(this).val().toLowerCase();
-    $('#tabela tbody tr').filter(function () {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-    });
+function buscaAtivoTabela() {
+  const meuInput = $('#buscaequip');
+  let timeout;
+  $('#buscaequip').on('input', function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      $.ajax({
+        url: `/ativos/findAtivos`,
+        data: {
+          nome: meuInput.val(),
+        },
+        dataType: 'json',
+        success: function (data) {
+          montaTabelaComPaginacao(data);
+        },
+        error: function (xhr, status, error) {
+          mostraErro(
+            'Ocorreu um erro ao buscar os dados dos usuários cadastrados!'
+          );
+        },
+      });
+    }, 800);
   });
 }
+
 // Função dos botões de ações
 function editaExcluiUsuarios() {
   // Adicione um manipulador de eventos 'click' para o botão de excluir
@@ -449,6 +505,7 @@ function editaExcluiUsuarios() {
   });
 }
 
+//Função responsável por controlar a visibilidade dos campos de componentes de hardware
 function selectOnChange() {
   $('.hardware').on('change', function (event) {
     const selecionado = $('#hardware option:selected').val();
@@ -488,6 +545,7 @@ function selectOnChange() {
   });
 }
 
+//Função responsável por retornar nome da classe
 function getClassName() {
   const exibido = $('.form-row.itemHardware').find('div').not('[hidden]');
   const parts = exibido[0].className.split(' ');
@@ -495,18 +553,23 @@ function getClassName() {
   return classe;
 }
 
+//Função responsável por retornar a div de cada select
 function getClassDiv(string, indice) {
   const clas = string[indice].className.split(' ');
   const name = clas[clas.length - 1];
   return name;
 }
 
+//Função responsável por montar a tabela de componentes de hardware ao adicionar um novo ativo
 function montaTabela() {
   $('.buttonAdd').on('click', function () {
     const exibido = $('.form-row.itemHardware').find('div').not('[hidden]');
-    console.log(`${exibido.find('select').val()}`);
     if (!`${exibido.find('select').val()}`) {
-      Swal.fire('Informe um item para adicionar o componente');
+      mostraMensagem(
+        'Atenção!',
+        'Informe um item para adicionar o componente',
+        'Warning'
+      );
     } else {
       const novaLinha = $(
         `<tr id= item-${exibido
@@ -540,6 +603,7 @@ function montaTabela() {
   });
 }
 
+//Função responsável pelos campos de editar e excluir da tabela de componentes de hardware
 function excluiItemTabela(id) {
   $(document).on('click', `.btn-excluir-item-${id}`, function () {
     const itemExcluir = $(`#item-${id}`);
@@ -547,9 +611,10 @@ function excluiItemTabela(id) {
   });
 }
 
+//Função responsável por prepagar os dados para adicionar um novo ativo
 function cadastraNovoAtivo() {
   $(document).on('click', `.add`, function (event) {
-    const fabricante = $('#fabricante').val();
+    const nome = $('#nome').val();
     const local = $('#local_instalacao').val();
     const situacao = $('#situacao').val();
     const dataInstalacao = $('#dataInstalacao').val();
@@ -566,7 +631,7 @@ function cadastraNovoAtivo() {
         })
         .get();
     });
-    dados.push(fabricante, local, situacao, dataInstalacao, componentes);
+    dados.push(nome, local, situacao, dataInstalacao, componentes);
     if (componentes.length) {
       $.ajax({
         type: 'POST',
@@ -574,20 +639,34 @@ function cadastraNovoAtivo() {
         data: JSON.stringify(dados),
         contentType: 'application/json',
         success: function (resposta) {
-          window.location.href = '/ativos';
+          Swal.fire({
+            title: 'Equipamento Cadastrado com Sucesso!',
+            confirmButtonText: 'Ok',
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              window.location.href = '/ativos';
+            }
+          });
         },
         error: function (erro) {
-          console.error('Erro na solicitação:', erro);
+          mostraMensagem('Atenção!', erro.responseText, 'error');
         },
       });
     } else {
-      Swal.fire('Preencha os componentes do equipamento');
+      mostraMensagem(
+        'Atenção!',
+        'Preencha os componentes do equipamento',
+        'warning'
+      );
     }
   });
 }
+
+//Função responsável por preparar os dados para editar um novo ativo
 function editaAtivo() {
   $(document).on('click', `.edit`, function (event) {
-    const fabricante = $('#fabricante').val();
+    const nome = $('#nome').val();
     const local = $('#local_instalacao').val();
     const situacao = $('#situacao').val();
     const dataInstalacao = $('#dataInstalacao').val();
@@ -604,7 +683,7 @@ function editaAtivo() {
         })
         .get();
     });
-    dados.push(fabricante, local, situacao, dataInstalacao, componentes);
+    dados.push(nome, local, situacao, dataInstalacao, componentes);
     if (componentes.length) {
       const id = window.location.pathname;
       $.ajax({
@@ -629,15 +708,20 @@ function editaAtivo() {
           });
         },
         error: function (erro) {
-          console.error('Erro na solicitação:', erro);
+          mostraMensagem('Atenção!', erro.responseText, 'error');
         },
       });
     } else {
-      Swal.fire('Preencha os componentes do equipamento');
+      mostraMensagem(
+        'Atenção!',
+        'Preencha os componentes do equipamento',
+        'Warning'
+      );
     }
   });
 }
 
+//Função responsável setar os dados quando entra para editar um novo ativo
 function setaDadosAtivosEditar() {
   const rotaAtual = window.location.pathname.slice(0, 14);
   if (rotaAtual === '/ativos/editar') {
@@ -649,7 +733,6 @@ function setaDadosAtivosEditar() {
       url: '/ativos/getDadosAtivos',
       dataType: 'json',
       success: function (data) {
-        console.log(data.ativos[0].hardware[0].componentes);
         data.ativos[0].hardware[0].componentes.forEach((dados) => {
           const novaLinha = $(`<tr id= item-${dados.id}>`);
 
@@ -670,8 +753,101 @@ function setaDadosAtivosEditar() {
         });
       },
       error: function (xhr, status, error) {
-        console.error('Erro ao buscar os ativos: ' + error);
+        mostraMensagem('Atenção!', erro.responseText, 'error');
       },
     });
+  }
+}
+
+// Função Responsável por exibir erros quando não retornar os dados necessários
+function mostraMensagem(Titulo, mensagem, icone) {
+  Swal.fire({
+    title: `${Titulo}`,
+    text: `${mensagem}`,
+    icon: `${icone}`,
+    confirmButtonColor: '#6c757d',
+    confirmButtonText: 'Ok',
+    width: '22em',
+  });
+}
+
+// Função responsável por montar a tabela com paginação
+function montaTabelaComPaginacao(data) {
+  var registrosPorPagina = 8;
+  var paginaAtual = 0;
+  $('#pagina-anterior').click(function () {
+    paginaAtual = paginaAnterior(paginaAtual);
+    exibirDados(
+      data,
+      (paginaAtual - 1) * registrosPorPagina,
+      paginaAtual * registrosPorPagina
+    );
+  });
+
+  $('#pagina-proxima').click(function () {
+    paginaAtual = paginaProxima(paginaAtual, registrosPorPagina, data);
+    exibirDados(
+      data,
+      paginaAtual * registrosPorPagina > registrosPorPagina
+        ? registrosPorPagina
+        : paginaAtual * registrosPorPagina,
+      data.length < registrosPorPagina ? registrosPorPagina : data.length
+    );
+  });
+
+  // Exibir dados iniciais
+  exibirDados(
+    data,
+    0,
+    registrosPorPagina < data.length ? registrosPorPagina : data.length
+  );
+}
+
+//Função Responsável por exibir os dados com paginação
+function exibirDados(data, startIndex, endIndex) {
+  var tabela = $('#tabelaAtivos tbody');
+  tabela.empty();
+  console.log(startIndex, endIndex);
+  if (data) {
+    for (var i = startIndex; i < endIndex; i++) {
+      var row = $('<tr>');
+      row.append($('<td>').text(data[i]._id));
+      row.append($('<td>').text(data[i].nome));
+      row.append($('<td>').text(data[i].local));
+      row.append(
+        $(
+          `<td><div class="d-inline-block"><form id="form-edita-${data[i]._id}" action="/ativos/editar/${data[i]._id}?_method=GET" method="GET"><button class="btn btn-link me-2"><i class='bx bxs-edit' id='${data[i]._id}'><i
+          class="uil uil-pen"></i></button></form>
+          </div>
+          `
+        )
+      );
+      row.append(`<td><div class="d-inline-block"><form id="form-excluir-${data[i]._id}" action="/ativos/deletar/${data[i]._id}?_method=DELETE" method="POST"><button type="button" class="btn btn-link btn-excluir" data-id=${data[i]._id}><i
+      class="uil uil-trash"></i></button></form>
+      </div>`);
+
+      tabela.append(row);
+    }
+  }
+}
+
+// Função Responsável pelos botões avançar e voltar da tabela
+function paginaAnterior(paginaAtual) {
+  console.log(paginaAtual);
+  if (paginaAtual > 0) {
+    paginaAtual--;
+    return paginaAtual;
+  } else {
+    return paginaAtual;
+  }
+}
+
+// Função Responsável pelos botões avançar e voltar da tabela
+function paginaProxima(paginaAtual, endIndex, data) {
+  if (paginaAtual * endIndex < data.length) {
+    paginaAtual++;
+    return paginaAtual;
+  } else {
+    return paginaAtual;
   }
 }

@@ -28,6 +28,7 @@ const indexAtivos = function (request, response, next) {
       );
   }
 };
+
 const show = async function (request, response, next) {
   const jsFiles = ['layout.js', 'controllerAtivos.js'];
   try {
@@ -45,6 +46,7 @@ const show = async function (request, response, next) {
       );
   }
 };
+
 const getDadosAtivos = async function (request, response, next) {
   try {
     const ativos = await Ativo.find();
@@ -156,6 +158,7 @@ const memoria = async function (request, response, next) {
       );
   }
 };
+
 const armazenamentos = async function (request, response, next) {
   try {
     const ssdHDD = await armazenamento.find({});
@@ -170,6 +173,7 @@ const armazenamentos = async function (request, response, next) {
       );
   }
 };
+
 const fontes = async function (request, response, next) {
   try {
     const fontes = await fonte.find({});
@@ -184,6 +188,7 @@ const fontes = async function (request, response, next) {
       );
   }
 };
+
 const placaVideo = async function (request, response, next) {
   try {
     const Placas = await placaVideos.find({});
@@ -198,6 +203,7 @@ const placaVideo = async function (request, response, next) {
       );
   }
 };
+
 const monitors = async function (request, response, next) {
   try {
     const monitores = await monitor.find({});
@@ -212,6 +218,7 @@ const monitors = async function (request, response, next) {
       );
   }
 };
+
 const coolers = async function (request, response, next) {
   try {
     const coler = await cooler.find({});
@@ -226,6 +233,7 @@ const coolers = async function (request, response, next) {
       );
   }
 };
+
 const gabinetes = async function (request, response, next) {
   try {
     const gabinet = await gabinete.find({});
@@ -243,14 +251,14 @@ const gabinetes = async function (request, response, next) {
 
 const add = async function (request, response, next) {
   const dados = request.body;
-  const fabricante = dados[0];
+  const nome = dados[0];
   const local = dados[1];
   const situacao = dados[2];
   const dataInstalacao = dados[3];
   const componentes = dados[4];
   try {
     const novoAtivo = new Ativo({
-      fabricante,
+      nome,
       local,
       situacao,
       dataInstalacao,
@@ -263,7 +271,13 @@ const add = async function (request, response, next) {
     await novoAtivo.save();
     request.flash('success_mgs', 'Ativo Cadastrado com Sucesso!');
     response.redirect('/ativos');
-  } catch (error) {}
+  } catch (error) {
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação. Detalhe do Erro:${error}`
+      );
+  }
 };
 
 const deletar = async function (request, response, next) {
@@ -279,6 +293,7 @@ const deletar = async function (request, response, next) {
       );
   }
 };
+
 const update = async function (request, response, next) {
   const dados = request.body;
   const nome = dados[0];
@@ -302,10 +317,14 @@ const update = async function (request, response, next) {
     request.flash('success_mgs', 'Ativo Atualizado com Sucesso!');
     response.json({});
   } catch (error) {
-    console.log(error);
-    response.json({ error: false, error });
+    response
+      .status(500)
+      .send(
+        `Ocorreu um erro ao processar a solicitação Detalhe do Erro:.${error}`
+      );
   }
 };
+
 const showEquipamento = async function (request, response, next) {
   const jsFiles = ['layout.js', 'controllerAtivos.js'];
   try {
@@ -323,6 +342,18 @@ const showEquipamento = async function (request, response, next) {
       );
   }
 };
+
+const findAtivo = async function (request, response, next) {
+  try {
+    const ativos = await Ativos.find({
+      $or: [{ nome: new RegExp(request.query.nome, 'i') }],
+    });
+    response.json(ativos);
+  } catch (err) {
+    response.status(500).send(err);
+  }
+};
+
 module.exports = {
   add,
   indexAtivos,
@@ -343,4 +374,5 @@ module.exports = {
   update,
   getDadosAtivos,
   getDadosGraficos,
+  findAtivo,
 };

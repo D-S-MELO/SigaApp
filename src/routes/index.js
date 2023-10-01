@@ -20,6 +20,7 @@ const hardware = require('../controllers/hardware');
 const chamados = require('../controllers/chamados');
 //Rota Principal
 router.get('/', Home.index);
+//Rota da tela de Usuários
 router.get('/usuario/cadastro', user.indexCardUser);
 router.get('/usuario', user.indexUser);
 router.get('/usuario', user.dataUser);
@@ -29,6 +30,7 @@ router.get('/usuario/editar/:id', user.show);
 router.delete('/usuario/deletar/:id', user.deletar);
 router.put('/usuario/editar/:id', user.update);
 router.post('/usuario/cadastro', user.add);
+//Rotas da Tela de Ativos
 router.get('/ativosAdd', ativos.indexAtivos);
 router.get('/ativosAdd/local', ativos.local);
 router.get('/ativosAdd/so', ativos.so);
@@ -48,6 +50,7 @@ router.get('/ativos/getDadosGraficos', ativos.getDadosGraficos);
 router.delete('/ativos/deletar/:id', ativos.deletar);
 router.get('/ativos/editar/:id', ativos.showEquipamento);
 router.put('/ativos/editar/:id', ativos.update);
+router.get('/ativos/findAtivos', ativos.findAtivo);
 //Rotas Placas Mãe
 router.get('/placaMae', placaMae.index);
 router.get('/placaMae/cadastro', placaMae.indexCadastro);
