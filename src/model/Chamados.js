@@ -11,6 +11,15 @@ const chamadoSchema = new Schema(
       type: String,
       require: true,
     },
+    user_atendimento: [{ type: Schema.Types.ObjectId, ref: 'Usuario' }],
+    status: {
+      type: String,
+      default: 'Aguardando Atendimento',
+    },
+    descricao_atendimento: {
+      type: String,
+      default: '',
+    },
   },
   {
     timestamps: true,

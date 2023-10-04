@@ -458,6 +458,8 @@ function buscaAtivoTabela() {
   const meuInput = $('#buscaequip');
   let timeout;
   $('#buscaequip').on('input', function () {
+    meuInput.val() ? desabilitarPaginacao(true) : desabilitarPaginacao(false);
+
     clearTimeout(timeout);
     timeout = setTimeout(function () {
       $.ajax({
@@ -773,44 +775,38 @@ function mostraMensagem(Titulo, mensagem, icone) {
 
 // Função responsável por montar a tabela com paginação
 function montaTabelaComPaginacao(data) {
-  var registrosPorPagina = 8;
-  var paginaAtual = 0;
-  $('#pagina-anterior').click(function () {
-    paginaAtual = paginaAnterior(paginaAtual);
-    exibirDados(
-      data,
-      (paginaAtual - 1) * registrosPorPagina,
-      paginaAtual * registrosPorPagina
-    );
+  var currentPage = 1;
+  var itemsPerPage = 8;
+
+  $('#pagina-anterior').on('click', function () {
+    if (currentPage > 1) {
+      currentPage--;
+      exibirDados(data, currentPage, itemsPerPage);
+    }
   });
 
-  $('#pagina-proxima').click(function () {
-    paginaAtual = paginaProxima(paginaAtual, registrosPorPagina, data);
-    exibirDados(
-      data,
-      paginaAtual * registrosPorPagina > registrosPorPagina
-        ? registrosPorPagina
-        : paginaAtual * registrosPorPagina,
-      data.length < registrosPorPagina ? registrosPorPagina : data.length
-    );
+  $('#pagina-proxima').on('click', function () {
+    const maxPage = Math.ceil(data.length / itemsPerPage);
+    if (currentPage < maxPage) {
+      currentPage++;
+      exibirDados(data, currentPage, itemsPerPage);
+    }
   });
 
-  // Exibir dados iniciais
-  exibirDados(
-    data,
-    0,
-    registrosPorPagina < data.length ? registrosPorPagina : data.length
-  );
+  exibirDados(data, currentPage, itemsPerPage);
 }
 
-//Função Responsável por exibir os dados com paginação
-function exibirDados(data, startIndex, endIndex) {
-  var tabela = $('#tabelaAtivos tbody');
+// Função Responsável por exibir os dados com paginação
+function exibirDados(data, currentPage, itemsPerPage) {
+  const tabela = $('#tabelaAtivos tbody');
   tabela.empty();
-  console.log(startIndex, endIndex);
+
   if (data) {
-    for (var i = startIndex; i < endIndex; i++) {
-      var row = $('<tr>');
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    for (var i = startIndex; i < endIndex && i < data.length; i++) {
+      const row = $('<tr>');
       row.append($('<td>').text(data[i]._id));
       row.append($('<td>').text(data[i].nome));
       row.append($('<td>').text(data[i].local));
@@ -833,21 +829,18 @@ function exibirDados(data, startIndex, endIndex) {
 
 // Função Responsável pelos botões avançar e voltar da tabela
 function paginaAnterior(paginaAtual) {
-  console.log(paginaAtual);
-  if (paginaAtual > 0) {
-    paginaAtual--;
-    return paginaAtual;
-  } else {
-    return paginaAtual;
-  }
+  return Math.max(0, --paginaAtual);
 }
 
 // Função Responsável pelos botões avançar e voltar da tabela
-function paginaProxima(paginaAtual, endIndex, data) {
-  if (paginaAtual * endIndex < data.length) {
+function paginaProxima(paginaAtual, registrosPorPagina, data) {
+  if (paginaAtual < registrosPorPagina) {
     paginaAtual++;
-    return paginaAtual;
-  } else {
-    return paginaAtual;
   }
+  return paginaAtual;
+}
+
+// Função Para desabilitar botã de paginação na busca
+function desabilitarPaginacao(desabilitar) {
+  $('#pagina-anterior, #pagina-proxima').prop('disabled', desabilitar);
 }

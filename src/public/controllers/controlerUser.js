@@ -72,49 +72,36 @@ function clickBotaoUsuarios() {
 
 // Função responsável por montar a tabela com paginação
 function montaTabelaComPaginacao(data) {
-  var registrosPorPagina = 10;
-  var paginaAtual = 1;
+  var currentPage = 1;
+  var itemsPerPage = 10;
 
-  $('#pagina-anterior').click(function () {
-    paginaAtual = paginaAnterior(paginaAtual);
-    exibirDados(
-      data,
-      (paginaAtual - 1) * registrosPorPagina,
-      paginaAtual * registrosPorPagina
-    );
+  $('#pagina-anterior').on('click', function () {
+    if (currentPage > 1) {
+      currentPage--;
+      exibirDados(data, currentPage, itemsPerPage);
+    }
   });
 
-  $('#pagina-proxima').click(function () {
-    paginaAtual = paginaProxima(
-      paginaAtual,
-      paginaAtual * registrosPorPagina,
-      data
-    );
-
-    exibirDados(
-      data,
-      data.length - registrosPorPagina,
-      data.length <= registrosPorPagina
-        ? data.length
-        : data.length / paginaAtual
-    );
+  $('#pagina-proxima').on('click', function () {
+    var maxPage = Math.ceil(data.length / itemsPerPage);
+    if (currentPage < maxPage) {
+      currentPage++;
+      exibirDados(data, currentPage, itemsPerPage);
+    }
   });
-  // Exibir dados iniciais
-  var total = registrosPorPagina < data.length;
-  exibirDados(
-    data,
-    0,
-    registrosPorPagina < data.length ? registrosPorPagina : 10
-  );
+
+  exibirDados(data, currentPage, itemsPerPage);
 }
 
 //Função Responsável por exibir os dados com paginação
-function exibirDados(data, startIndex, endIndex) {
+function exibirDados(data, currentPage, itemsPerPage) {
   var tabela = $('#tabela tbody');
   tabela.empty();
 
   if (data) {
-    for (var i = startIndex; i < endIndex; i++) {
+    var startIndex = (currentPage - 1) * itemsPerPage;
+    var endIndex = startIndex + itemsPerPage;
+    for (var i = startIndex; i < endIndex && i < data.length; i++) {
       var row = $('<tr>');
       row.append($('<td>').text(data[i].nome));
       row.append($('<td>').text(data[i].email));
@@ -138,18 +125,13 @@ function exibirDados(data, startIndex, endIndex) {
 
 // Função Responsável pelos botões avançar e voltar da tabela
 function paginaAnterior(paginaAtual) {
-  if (paginaAtual > 1) {
-    paginaAtual--;
-    return paginaAtual;
-  }
-  return paginaAtual;
+  return Math.max(0, --paginaAtual);
 }
 
 // Função Responsável pelos botões avançar e voltar da tabela
-function paginaProxima(paginaAtual, endIndex, data) {
-  if (endIndex < data.length) {
+function paginaProxima(paginaAtual, registrosPorPagina, data) {
+  if (paginaAtual < registrosPorPagina) {
     paginaAtual++;
-    return paginaAtual;
   }
   return paginaAtual;
 }

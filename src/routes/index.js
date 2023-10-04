@@ -18,8 +18,14 @@ const monitor = require('../controllers/monitor');
 const cooler = require('../controllers/cooler');
 const hardware = require('../controllers/hardware');
 const chamados = require('../controllers/chamados');
+const login = require('../controllers/login');
 //Rota Principal
 router.get('/', Home.index);
+
+//Rotas da Tela de Login
+router.get('/login', login.index);
+router.get('/login/validaUsuario', login.getDadosLogin);
+
 //Rota da tela de Usuários
 router.get('/usuario/cadastro', user.indexCardUser);
 router.get('/usuario', user.indexUser);
@@ -151,6 +157,10 @@ router.get('/hardware', hardware.index);
 router.get('/chamados', chamados.index);
 router.get('/chamados/cadastro', chamados.indexCadastro);
 router.post('/chamados/cadastro', chamados.add);
+router.get('/chamados/getChamados', chamados.getDados);
+router.get('/chamados/find', chamados.find);
+router.get('/chamados/atender/:id', chamados.showChamado);
+router.get('/chamados/setDados', chamados.setDadosChamado);
+router.post('/chamados/atenderChamado', chamados.update);
 router.get('*', err404.index);
-
 module.exports = router;

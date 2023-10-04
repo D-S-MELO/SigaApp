@@ -106,48 +106,35 @@ function clickBotaoExcluir() {
 
 // Função responsável por montar a tabela com paginação
 function montaTabelaComPaginacao(data, idtab, idtTabRoutes) {
-  var registrosPorPagina = 5;
-  var paginaAtual = 0;
-  $('#pagina-anterior').click(function () {
-    paginaAtual = paginaAnterior(paginaAtual);
-    exibirDados(
-      data,
-      (paginaAtual - 1) * registrosPorPagina,
-      paginaAtual * registrosPorPagina,
-      idtab,
-      idtTabRoutes
-    );
+  var currentPage = 1;
+  var itemsPerPage = 6;
+  $('#pagina-anterior').on('click', function () {
+    if (currentPage > 1) {
+      currentPage--;
+      exibirDados(data, currentPage, itemsPerPage, idtab, idtTabRoutes);
+    }
   });
 
-  $('#pagina-proxima').click(function () {
-    paginaAtual = paginaProxima(paginaAtual, registrosPorPagina, data);
-    exibirDados(
-      data,
-      paginaAtual * registrosPorPagina > registrosPorPagina
-        ? registrosPorPagina
-        : paginaAtual * registrosPorPagina,
-      data.length < registrosPorPagina ? registrosPorPagina : data.length,
-      idtab,
-      idtTabRoutes
-    );
+  $('#pagina-proxima').on('click', function () {
+    const maxPage = Math.ceil(data.length / itemsPerPage);
+    if (currentPage < maxPage) {
+      currentPage++;
+      exibirDados(data, currentPage, itemsPerPage, idtab, idtTabRoutes);
+    }
   });
 
   // Exibir dados iniciais
-  exibirDados(
-    data,
-    0,
-    registrosPorPagina < data.length ? registrosPorPagina : data.length,
-    idtab,
-    idtTabRoutes
-  );
+  exibirDados(data, currentPage, itemsPerPage, idtab, idtTabRoutes);
 }
 
 //Função Responsável por exibir os dados com paginação
-function exibirDados(data, startIndex, endIndex, idtab, idtTabRoutes) {
+function exibirDados(data, currentPage, itemsPerPage, idtab, idtTabRoutes) {
   var tabela = $(`#${idtab} tbody`);
   tabela.empty();
   if (data) {
-    for (var i = startIndex; i < endIndex; i++) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    for (var i = startIndex; i < endIndex && i < data.length; i++) {
       var row = $('<tr>');
       row.append($('<td>').text(data[i].nome));
       row.append(
@@ -169,18 +156,13 @@ function exibirDados(data, startIndex, endIndex, idtab, idtTabRoutes) {
 
 // Função Responsável pelos botões avançar e voltar da tabela
 function paginaAnterior(paginaAtual) {
-  if (paginaAtual > 1) {
-    paginaAtual--;
-    return paginaAtual;
-  }
-  return paginaAtual;
+  return Math.max(0, --paginaAtual);
 }
 
 // Função Responsável pelos botões avançar e voltar da tabela
-function paginaProxima(paginaAtual, endIndex, data) {
-  if (paginaAtual * endIndex <= data.length) {
+function paginaProxima(paginaAtual, registrosPorPagina, data) {
+  if (paginaAtual < registrosPorPagina) {
     paginaAtual++;
-    return paginaAtual;
   }
   return paginaAtual;
 }

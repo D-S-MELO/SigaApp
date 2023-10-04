@@ -1,0 +1,103 @@
+{{>menu}}
+<section class="layout">
+  <div class="top">
+    <i class="uil uil-bars sidebar-toggle"></i>
+    <div hidden class="search-box">
+      <i class="uil uil-search"></i>
+      <input type="text" placeholder="Search Here..." />
+    </div>
+    <img hidden src="images/user.png" alt="" />
+  </div>
+  <div class="dash-content">
+    {{#if err}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{description}}
+      <hr>
+      <h5>Detalhe do Erro:</h5>
+      <p>{{err}}</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {{/if}}
+    <div class="form-group">
+      <div class="accordion" id="dadosChamado">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Dados do Chamado
+              </button>
+            </h2>
+          </div>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#dadosChamado">
+            <div class="card-body">
+              <div class="form-group">
+                <div class="row">
+                  <div class="form-group col-sm-12 id">
+                    <label for="equip">Identificação do Equipamento</label>
+                    <input type="text" class="form-control" id="equipamento" name="equipamento"
+                      placeholder="equipamento" readonly />
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="form-group col-sm-12 local">
+                    <label for="local">Local</label>
+                    <input type="text" class="form-control" id="local" name="local" placeholder="local" readonly />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="form-group col-sm-12 descricao">
+                    <label for="descricao">Descrição Rápida do Problema</label>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="1" readonly></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="form-group col-sm-12 descricao">
+                    <label for="descricao_detalhada">Descrição Detalhada</label>
+                    <textarea class="form-control" id="descricao_detalhada" name="descricao_detalhada" rows="6"
+                      readonly></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="needs-validation " action="/chamados/atenderChamado" method="POST">
+      <div class="form-group">
+        <div class="row">
+          <div class="form-group col-sm-8">
+            <label for="">Status do Atendimento</label>
+            <select id="status" name="status" class="form-control" required>
+              <option>Atendido</option>
+              <option>Aguardando Atendimento</option>
+              <option selected>Em Atendimento</optionselected>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-row">
+          <div class="form-group col-sm-12">
+            <label for="descricao_atendimento">Descrição do Atendimento</label>
+            <textarea class="form-control col-sm-12" id="descricao_atendimento" name="descricao_atendimento" rows="10"
+              required>{{descricao_atendimento}}</textarea>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-secondary update" style="margin-top: 32px">
+        Atualizar Chamado
+      </button>
+    </form>
+  </div>
+</section>

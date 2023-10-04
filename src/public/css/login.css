@@ -39,7 +39,7 @@ body {
   position: relative;
   height: 50px;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 26px;
 }
 
 .wrapper form .field input {
@@ -81,13 +81,20 @@ body {
   color: #000000;
   margin: 10px 0 0 10px;
 }
-.wrapper form .field input[type='submit'] {
+.wrapper form .field input[type='button'] {
   background: linear-gradient(-135deg, #304352, #d7d2cc);
   font-size: 18px;
   font-weight: 500;
   padding-left: none;
   cursor: pointer;
 }
-.wrapper form .field input[type='submit']:active {
+.wrapper form .field input[type='button']:active {
   transform: scale(0.8);
+}
+.mensagemValidacao {
+  display: flex;
+  place-items: center;
+  align-items: center;
+  justify-content: center;
+  color: red;
 }

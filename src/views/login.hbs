@@ -11,18 +11,24 @@
 <body id="body">
   <div class="wrapper">
     <div class="title">SIGA</div>
-    <form id="form" action="/login" method="POST">
-      <label style="color:Red">{{message}}</label>
+    <form class="needs-validation">
+      <span class="mensagemValidacao" id="mensagemValidacao"></span>
       <div class="field">
-        <input type="text" name="email" id="email" value="{{email}}" required>
-        <label>Email</label>
+        <input type="text" id="validationCustom01" name="email" value="{{email}}" required>
+        <label for="validationCustom03">Email</label>
+        <div class="invalid-feedback">
+          Por favor, informe o email.
+        </div>
       </div>
       <div class="field">
-        <input type="password" name="senha" id="senha" required>
+        <input type="password" name="senha" id="validationCustom02" required>
         <label>Senha</label>
+        <div class="invalid-feedback">
+          Por favor, informe a senha.
+        </div>
       </div>
       <div class="field">
-        <input type="submit" value="Login" id="login" />
+        <input type="button" id="login" name="login" value="Login" />
       </div>
     </form>
   </div>

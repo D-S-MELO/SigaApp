@@ -8,7 +8,6 @@ function getDadosGrafico() {
     url: '/ativos/getDadosGraficos',
     dataType: 'json',
     success: function (data) {
-      console.log(data);
       criarGrafico(data);
     },
     error: function (xhr, status, error) {

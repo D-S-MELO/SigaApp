@@ -72,52 +72,37 @@ function clickBotaolocal() {
 
 // Função responsável por montar a tabela com paginação
 function montaTabelaComPaginacao(data) {
-  var registrosPorPagina = 10;
-  var paginaAtual = 1;
+  var currentPage = 1;
+  var itemsPerPage = 12;
 
-  $('#pagina-anterior').click(function () {
-    paginaAtual = paginaAnterior(paginaAtual);
-    exibirDados(
-      data,
-      (paginaAtual - 1) * registrosPorPagina,
-      paginaAtual * registrosPorPagina
-    );
+  $('#pagina-anterior').on('click', function () {
+    if (currentPage > 1) {
+      currentPage--;
+      exibirDados(data, currentPage, itemsPerPage);
+    }
   });
 
-  $('#pagina-proxima').click(function () {
-    paginaAtual = paginaProxima(
-      paginaAtual,
-      paginaAtual * registrosPorPagina,
-      data
-    );
-
-    console.log(data.length <= registrosPorPagina);
-    exibirDados(
-      data,
-      data.length - registrosPorPagina,
-      data.length <= registrosPorPagina
-        ? data.length
-        : data.length / paginaAtual
-    );
+  $('#pagina-proxima').on('click', function () {
+    const maxPage = Math.ceil(data.length / itemsPerPage);
+    if (currentPage < maxPage) {
+      currentPage++;
+      exibirDados(data, currentPage, itemsPerPage);
+    }
   });
-  // Exibir dados iniciais
-  var total = registrosPorPagina < data.length;
-  console.log(total);
-  exibirDados(
-    data,
-    0,
-    registrosPorPagina < data.length ? registrosPorPagina : 10
-  );
+
+  exibirDados(data, currentPage, itemsPerPage);
 }
 
 //Função Responsável por exibir os dados com paginação
-function exibirDados(data, startIndex, endIndex) {
-  var tabela = $('#tabela tbody');
+function exibirDados(data, currentPage, itemsPerPage) {
+  const tabela = $('#tabela tbody');
   tabela.empty();
 
   if (data) {
-    for (var i = startIndex; i < endIndex; i++) {
-      var row = $('<tr>');
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    for (var i = startIndex; i < endIndex && i < data.length; i++) {
+      const row = $('<tr>');
       row.append($('<td>').text(data[i].nome));
       row.append(`<td><div class="d-inline-block"><form id="form-excluir-${data[i]._id}" action="/local/deletar/${data[i]._id}?_method=DELETE" method="POST"><button type="button" class="btn btn-link btn-excluir" data-id=${data[i]._id}><i
       class="uil uil-trash"></i></button></form>
@@ -131,18 +116,13 @@ function exibirDados(data, startIndex, endIndex) {
 
 // Função Responsável pelos botões avançar e voltar da tabela
 function paginaAnterior(paginaAtual) {
-  if (paginaAtual > 1) {
-    paginaAtual--;
-    return paginaAtual;
-  }
-  return paginaAtual;
+  return Math.max(0, --paginaAtual);
 }
 
 // Função Responsável pelos botões avançar e voltar da tabela
-function paginaProxima(paginaAtual, endIndex, data) {
-  if (endIndex < data.length) {
+function paginaProxima(paginaAtual, registrosPorPagina, data) {
+  if (paginaAtual < registrosPorPagina) {
     paginaAtual++;
-    return paginaAtual;
   }
   return paginaAtual;
 }
