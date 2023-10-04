@@ -23,15 +23,17 @@ function getDadosLogin() {
     const email = codificaDados($('#validationCustom01').val());
     const senha = codificaDados($('#validationCustom02').val());
     $.ajax({
-      type: 'GET',
-      url: '/login/validaUsuario',
+      type: 'POST',
+      url: '/login',
       data: { email: email, senha: senha },
-      contentType: 'application/json',
+      contentType: 'text/html',
       success: function (resposta) {
         window.location.href = '/';
       },
       error: function (xhr, status, error) {
-        $('#mensagemValidacao').text(xhr.responseText);
+        $('#mensagemValidacao').text(
+          'Erro no login. Verifique suas credenciais.'
+        );
       },
     });
   });

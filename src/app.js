@@ -6,8 +6,9 @@ const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
 const methodOverrride = require('method-override');
+const passport = require('passport');
 require('./config/db');
-
+require('./config/passport');
 // inicialização
 const app = express();
 initHandlebars(app);
@@ -27,7 +28,8 @@ app.use(flash());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverrride('_method'));
-
+app.use(passport.initialize());
+app.use(passport.session());
 //variaveis globais
 app.use((request, response, next) => {
   response.locals.success_mgs = request.flash('success_mgs');

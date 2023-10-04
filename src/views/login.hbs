@@ -11,10 +11,11 @@
 <body id="body">
   <div class="wrapper">
     <div class="title">SIGA</div>
-    <form class="needs-validation">
-      <span class="mensagemValidacao" id="mensagemValidacao"></span>
+    <form class="needs-validation" action="/login" method="POST">
+      <label style="color:Red"></label>
+      <span class="mensagemValidacao" id="mensagemValidacao "></span>
       <div class="field">
-        <input type="text" id="validationCustom01" name="email" value="{{email}}" required>
+        <input type="text" id="validationCustom01" name="email" required>
         <label for="validationCustom03">Email</label>
         <div class="invalid-feedback">
           Por favor, informe o email.
