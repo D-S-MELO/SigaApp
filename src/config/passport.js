@@ -12,20 +12,14 @@ passport.use(
       // Procura o E-mail
       const user = await User.findOne({ email });
       if (!user) {
-        return done(null, false, {
-          mensagem: 'Usuário não cadastrado!',
-          email,
-        });
+        return done(null, false);
       } else {
         //Compara a senha
         const match = await user.matchPassword(senha);
         if (match) {
           return done(null, user);
         } else {
-          return done(null, false, {
-            mensagem: 'Usuário ou senha inválidos!',
-            email,
-          });
+          return done(null, false);
         }
       }
     }

@@ -12,8 +12,9 @@
   <div class="wrapper">
     <div class="title">SIGA</div>
     <form class="needs-validation" action="/login" method="POST">
-      <label style="color:Red"></label>
-      <span class="mensagemValidacao" id="mensagemValidacao "></span>
+      {{#if message}}
+      <span class="mensagemValidacao" id="mensagemValidacao "> {{message}}</span>
+      {{/if}}
       <div class="field">
         <input type="text" id="validationCustom01" name="email" required>
         <label for="validationCustom03">Email</label>
@@ -29,7 +30,7 @@
         </div>
       </div>
       <div class="field">
-        <input type="button" id="login" name="login" value="Login" />
+        <input type="submit" id="login" name="login" value="Login" />
       </div>
     </form>
   </div>

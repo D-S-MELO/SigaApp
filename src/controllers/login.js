@@ -2,13 +2,23 @@ const { MASTER_DIR } = require('../helpers/constants');
 const User = require('../model/Usuario');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+
 const index = async function (request, response, next) {
   const jsFiles = ['controllerLogin.js'];
   try {
-    return response.render('login', {
-      layout: MASTER_DIR,
-      jsFiles: { files: jsFiles },
-    });
+    if (request.query.fail) {
+      return response.render('login', {
+        layout: MASTER_DIR,
+        jsFiles: { files: jsFiles },
+        message: 'Usuário e/ou senha incorretos!',
+      });
+    } else {
+      return response.render('login', {
+        layout: MASTER_DIR,
+        jsFiles: { files: jsFiles },
+        message: null,
+      });
+    }
   } catch (err) {
     response
       .status(500)
@@ -19,7 +29,6 @@ const index = async function (request, response, next) {
 };
 
 const getDadosLogin = async function (request, response, next) {
-  console.log(request.isAuthenticated() === true);
   try {
     var usuario = Buffer.from(request.query.email, 'base64').toString('utf-8');
     var senha = Buffer.from(request.query.senha, 'base64').toString('utf-8');
@@ -34,10 +43,11 @@ const getDadosLogin = async function (request, response, next) {
     response.status(500).send('Ocorreu um erro ao processar a requisição');
   }
 };
+
 const auth = passport.authenticate('local', {
   failureRedirect: '/login?fail=true',
   successRedirect: '/',
-  failureFlash: false,
+  failureFlash: true,
 });
 
 module.exports = {

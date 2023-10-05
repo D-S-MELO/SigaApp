@@ -11,7 +11,7 @@ function getDadosGrafico() {
       criarGrafico(data);
     },
     error: function (xhr, status, error) {
-      console.error('Erro ao buscar os local: ' + error);
+      mostraMensagem('Atenção', 'Erro ao processar a requisição', 'error');
     },
   });
 }
@@ -32,7 +32,7 @@ function cadastraNovoChamado() {
         window.location.href = '/chamados';
       },
       error: function (erro) {
-        console.error('Erro na solicitação:', erro);
+        mostraMensagem('Atenção', 'Erro ao processar a requisição', 'error');
       },
     });
   });
@@ -93,5 +93,16 @@ function criarGrafico(data) {
     options: {
       responsive: true,
     },
+  });
+}
+// Função Responsável por exibir erros quando não retornar os dados necessários
+function mostraMensagem(Titulo, mensagem, icone) {
+  Swal.fire({
+    title: `${Titulo}`,
+    text: `${mensagem}`,
+    icon: `${icone}`,
+    confirmButtonColor: '#6c757d',
+    confirmButtonText: 'Ok',
+    width: '22em',
   });
 }
